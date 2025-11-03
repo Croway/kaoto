@@ -54,7 +54,7 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
   const nodeRefId = nodeData.path.toString();
   const nodeReference = useRef<NodeReference>({
     path: nodeRefId,
-    isSource: true,
+    isSource: nodeData.isSource,
     get headerRef() {
       return headerRef.current;
     },
@@ -88,7 +88,8 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
 
   return (
     <div
-      data-testid={`node-${nodeData.isSource ? 'source' : 'target'}-${isSelected ? 'selected-' : ''}${nodeData.id}`}
+      data-testid={`document-${nodeData.id}`}
+      data-selected={isSelected}
       className={'document__container'}
       onClick={handleClickField}
     >

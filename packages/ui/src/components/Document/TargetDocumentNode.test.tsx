@@ -383,8 +383,7 @@ describe('TargetDocumentNode', () => {
         fireEvent.click(nodeContainer);
       });
 
-      const selectedNode = screen.getByTestId(`node-target-selected-${documentNodeData.id}`);
-      expect(selectedNode).toBeInTheDocument();
+      expect(nodeContainer).toHaveAttribute('data-selected', 'true');
     });
 
     it('should apply selected-container class when selected', () => {
@@ -428,8 +427,7 @@ describe('TargetDocumentNode', () => {
         fireEvent.click(nodeContainer);
       });
 
-      const selectedNode = screen.getByTestId(`node-target-selected-${documentNodeData.id}`);
-      expect(selectedNode).toBeInTheDocument();
+      expect(nodeContainer).toHaveAttribute('data-selected', 'true');
 
       act(() => {
         fireEvent.click(nodeContainer);
@@ -764,7 +762,7 @@ describe('TargetDocumentNode', () => {
       });
 
       // Node should be selected
-      expect(screen.getByTestId(`node-target-selected-${leafNode!.nodeData.id}`)).toBeInTheDocument();
+      expect(nodeContainer).toHaveAttribute('data-selected', 'true');
     });
   });
 

@@ -1,20 +1,16 @@
-import { StackItem } from '@patternfly/react-core';
 import clsx from 'clsx';
 import { FunctionComponent, MouseEvent, useCallback, useRef } from 'react';
 import { useCanvas } from '../../hooks/useCanvas';
 import { useMappingLinks } from '../../hooks/useMappingLinks';
-import { useToggle } from '../../hooks/useToggle';
 import { DocumentTreeNode } from '../../models/datamapper/document-tree-node';
 import { NodeReference } from '../../models/datamapper/visualization';
 import { TreeUIService } from '../../services/tree-ui.service';
 import { VisualizationService } from '../../services/visualization.service';
 import { useDocumentTreeStore } from '../../store';
-import { DocumentActions } from './actions/DocumentActions';
 import './Document.scss';
 import { NodeContainer } from './NodeContainer';
 import { BaseNode } from './Nodes/BaseNode';
 import { NodeTitle } from './NodeTitle';
-import { ParameterInputPlaceholder } from './ParameterInputPlaceholder';
 
 type TreeSourceNodeProps = {
   treeNode: DocumentTreeNode;
@@ -35,11 +31,6 @@ export const SourceDocumentNode: FunctionComponent<TreeSourceNodeProps> = ({
 }) => {
   const { getNodeReference, reloadNodeReferences, setNodeReference } = useCanvas();
   const { isInSelectedMapping, toggleSelectedNodeReference } = useMappingLinks();
-  const {
-    state: isRenamingParameter,
-    toggleOn: toggleOnRenamingParameter,
-    toggleOff: toggleOffRenamingParameter,
-  } = useToggle(false);
 
   const isExpanded = useDocumentTreeStore((state) => state.isExpanded(documentId, treeNode.path));
   const nodeData = treeNode.nodeData;
@@ -87,7 +78,8 @@ export const SourceDocumentNode: FunctionComponent<TreeSourceNodeProps> = ({
 
   return (
     <div
-      data-testid={`node-source-${isSelected ? 'selected-' : ''}${nodeData.id}`}
+      data-testid={`node-source-${nodeData.id}`}
+      data-selected={isSelected}
       className={clsx({ node__container: !isDocument })}
       onClick={handleClickField}
     >
@@ -103,37 +95,8 @@ export const SourceDocumentNode: FunctionComponent<TreeSourceNodeProps> = ({
               iconType={nodeData.type}
               isCollectionField={isCollectionField}
               isAttributeField={isAttributeField}
-              title={
-                !isRenamingParameter ? (
-                  <NodeTitle
-                    className="node__spacer"
-                    data-rank={rank}
-                    nodeData={nodeData}
-                    isDocument={isDocument}
-                    rank={rank}
-                  />
-                ) : null
-              }
-            >
-              {isRenamingParameter && (
-                <StackItem>
-                  <ParameterInputPlaceholder
-                    onComplete={() => toggleOffRenamingParameter()}
-                    parameter={nodeData.title}
-                  />
-                </StackItem>
-              )}
-
-              {!isRenamingParameter && !isReadOnly && isDocument ? (
-                <DocumentActions
-                  className="node__target__actions"
-                  nodeData={nodeData}
-                  onRenameClick={() => toggleOnRenamingParameter()}
-                />
-              ) : (
-                <span className="node__target__actions" />
-              )}
-            </BaseNode>
+              title={<NodeTitle className="node__spacer" nodeData={nodeData} isDocument={isDocument} rank={rank} />}
+            ></BaseNode>
           </NodeContainer>
         </div>
 

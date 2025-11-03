@@ -87,7 +87,8 @@ export const TargetDocumentNode: FunctionComponent<DocumentNodeProps> = ({ treeN
 
   return (
     <div
-      data-testid={`node-target-${isSelected ? 'selected-' : ''}${nodeData.id}`}
+      data-testid={`node-target-${nodeData.id}`}
+      data-selected={isSelected}
       className={clsx({ node__container: !isDocument })}
       onClick={handleClickField}
     >

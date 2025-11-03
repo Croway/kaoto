@@ -99,20 +99,32 @@ Cypress.Commands.add('countMappingLines', (num: number) => {
   cy.get('[data-testid^="mapping-link-"]').should('have.length', num);
 });
 
-Cypress.Commands.add('getDataMapperNode', (nodePath: string[]) => {
+// Internal helper - scopes queries to a specific panel
+Cypress.Commands.add('getDataMapperNode', (nodePath: string[], panelClass?: string) => {
+  const panel = panelClass ? cy.get(panelClass) : cy;
+
   return nodePath.slice(1).reduce(
     (acc, nodeId) => {
       return acc.find(`[data-testid^="${nodeId}"]`);
     },
-    cy.get(`[data-testid^="${nodePath[0]}"]`),
+    panel.find(`[data-testid="document-${nodePath[0]}"]`),
   );
+});
+
+// Public API - self-documenting panel-scoped commands
+Cypress.Commands.add('getDataMapperSourceNode', (nodePath: string[]) => {
+  return cy.getDataMapperNode(nodePath, '.source-panel');
+});
+
+Cypress.Commands.add('getDataMapperTargetNode', (nodePath: string[]) => {
+  return cy.getDataMapperNode(nodePath, '.target-panel');
 });
 
 Cypress.Commands.add('engageMapping', (sourceNodePath: string[], targetNodePath: string[], testXPath: string) => {
   const dataTransfer = new DataTransfer();
 
-  const sourceNode = cy.getDataMapperNode(sourceNodePath);
-  const targetNode = cy.getDataMapperNode(targetNodePath);
+  const sourceNode = cy.getDataMapperSourceNode(sourceNodePath);
+  const targetNode = cy.getDataMapperTargetNode(targetNodePath);
 
   sourceNode
     .find('[id^="draggable-"]')
@@ -134,7 +146,7 @@ Cypress.Commands.add('engageMapping', (sourceNodePath: string[], targetNodePath:
 
   targetNode.trigger('mouseup', { dataTransfer, force: true });
 
-  cy.getDataMapperNode(targetNodePath)
+  cy.getDataMapperTargetNode(targetNodePath)
     .find('[data-testid="transformation-xpath-input"]')
     .should('have.value', testXPath);
 });
@@ -142,11 +154,11 @@ Cypress.Commands.add('engageMapping', (sourceNodePath: string[], targetNodePath:
 Cypress.Commands.add(
   'engageForEachMapping',
   (sourceNodePath: string[], targetNodePath: string[], testXPath: string) => {
-    const targetNode = cy.getDataMapperNode(targetNodePath);
+    const targetNode = cy.getDataMapperTargetNode(targetNodePath);
     targetNode.find('[data-testid="transformation-actions-menu-toggle"]').first().click();
     cy.get('[data-testid="transformation-actions-foreach"]').click();
 
-    const updatedTargetNodePath = [...targetNodePath.slice(0, targetNodePath.length - 1), 'node-target-for-each'];
+    const updatedTargetNodePath = [...targetNodePath.slice(0, targetNodePath.length - 1), 'for-each'];
     cy.engageMapping(sourceNodePath, updatedTargetNodePath, testXPath);
   },
 );

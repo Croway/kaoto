@@ -111,7 +111,9 @@ describe('TargetDocument', () => {
 
     await screen.findByText('OrderPerson');
 
-    const nodes = screen.getAllByTestId(/^node-target-/);
+    const documents = screen.queryAllByTestId(/^document-doc-targetBody-/);
+    const fields = screen.queryAllByTestId(/^node-target-/);
+    const nodes = [...documents, ...fields];
     expect(nodes.length).toEqual(14);
   });
 
@@ -121,7 +123,9 @@ describe('TargetDocument', () => {
 
     await waitFor(
       () => {
-        const nodes = container.querySelectorAll('[data-testid^="node-target-"]');
+        const documents = container.querySelectorAll('[data-testid^="document-doc-targetBody-"]');
+        const fields = container.querySelectorAll('[data-testid^="node-target-"]');
+        const nodes = [...documents, ...fields];
         expect(nodes.length).toEqual(15);
       },
       { timeout: 3000 },

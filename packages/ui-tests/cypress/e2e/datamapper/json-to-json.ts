@@ -102,7 +102,7 @@ describe('Test for DataMapper : JSON to JSON', () => {
       [
         'node-target-fj-map',
         'node-target-fj-array-Item',
-        'node-target-for-each',
+        'for-each',
         'node-target-fj-map',
         'node-target-fj-number-Quantity',
       ],
@@ -113,7 +113,7 @@ describe('Test for DataMapper : JSON to JSON', () => {
       [
         'node-target-fj-map',
         'node-target-fj-array-Item',
-        'node-target-for-each',
+        'for-each',
         'node-target-fj-map',
         'node-target-fj-number-Price',
       ],
