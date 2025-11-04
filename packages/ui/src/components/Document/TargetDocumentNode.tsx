@@ -16,7 +16,6 @@ import { useDocumentTreeStore } from '../../store';
 import { DocumentActions } from './actions/DocumentActions';
 import { TargetNodeActions } from './actions/TargetNodeActions';
 import { AddMappingNode } from './AddMappingNode';
-import './Document.scss';
 import { NodeContainer } from './NodeContainer';
 import { BaseNode } from './Nodes/BaseNode';
 import { NodeTitle } from './NodeTitle';
@@ -89,11 +88,11 @@ export const TargetDocumentNode: FunctionComponent<DocumentNodeProps> = ({ treeN
     <div
       data-testid={`node-target-${nodeData.id}`}
       data-selected={isSelected}
-      className={clsx({ node__container: !isDocument })}
+      className="node__container"
       onClick={handleClickField}
     >
       <NodeContainer ref={containerRef} nodeData={nodeData}>
-        <div className={clsx({ node__header: !isDocument })}>
+        <div className="node__header">
           <NodeContainer nodeData={nodeData} ref={headerRef} className={clsx({ 'selected-container': isSelected })}>
             <BaseNode
               data-testid={nodeData.title}
@@ -105,6 +104,7 @@ export const TargetDocumentNode: FunctionComponent<DocumentNodeProps> = ({ treeN
               isCollectionField={isCollectionField}
               isAttributeField={isAttributeField}
               title={<NodeTitle className="node__spacer" nodeData={nodeData} isDocument={isDocument} rank={rank} />}
+              rank={rank}
             >
               {showNodeActions ? (
                 <TargetNodeActions
@@ -122,10 +122,10 @@ export const TargetDocumentNode: FunctionComponent<DocumentNodeProps> = ({ treeN
         </div>
 
         {hasChildren && isExpanded && (
-          <div className={clsx({ node__children: !isDocument })}>
+          <div className="node__children">
             {treeNode.children.map((childTreeNode) =>
               childTreeNode.nodeData instanceof AddMappingNodeData ? (
-                <AddMappingNode nodeData={childTreeNode.nodeData} key={childTreeNode.path} />
+                <AddMappingNode nodeData={childTreeNode.nodeData} key={childTreeNode.path} rank={rank + 2} />
               ) : (
                 <TargetDocumentNode
                   treeNode={childTreeNode}

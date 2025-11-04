@@ -23,6 +23,9 @@ interface BaseNodeProps extends IDataTestID {
 
   /** Title node */
   title: ReactNode;
+
+  /** Hierarchical depth level for indentation */
+  rank?: number;
 }
 
 export const BaseNode: FunctionComponent<PropsWithChildren<BaseNodeProps>> = ({
@@ -34,11 +37,12 @@ export const BaseNode: FunctionComponent<PropsWithChildren<BaseNodeProps>> = ({
   isCollectionField,
   isAttributeField,
   title,
+  rank,
   'data-testid': dataTestId,
   children,
 }) => {
   return (
-    <section className="node__row" data-draggable={isDraggable}>
+    <section className="node__row" data-draggable={isDraggable} data-expandable={isExpandable} style={{ '--node-rank': rank } as React.CSSProperties}>
       {isExpandable && (
         <Icon className="node__expand node__spacer" onClick={onExpandChange}>
           {isExpanded && <ChevronDown data-testid={`expand-icon-${dataTestId}`} />}

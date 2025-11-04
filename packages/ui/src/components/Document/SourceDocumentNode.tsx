@@ -7,7 +7,6 @@ import { NodeReference } from '../../models/datamapper/visualization';
 import { TreeUIService } from '../../services/tree-ui.service';
 import { VisualizationService } from '../../services/visualization.service';
 import { useDocumentTreeStore } from '../../store';
-import './Document.scss';
 import { NodeContainer } from './NodeContainer';
 import { BaseNode } from './Nodes/BaseNode';
 import { NodeTitle } from './NodeTitle';
@@ -80,11 +79,11 @@ export const SourceDocumentNode: FunctionComponent<TreeSourceNodeProps> = ({
     <div
       data-testid={`node-source-${nodeData.id}`}
       data-selected={isSelected}
-      className={clsx({ node__container: !isDocument })}
+      className="node__container"
       onClick={handleClickField}
     >
       <NodeContainer ref={containerRef} nodeData={nodeData}>
-        <div className={clsx({ node__header: !isDocument })}>
+        <div className="node__header">
           <NodeContainer nodeData={nodeData} ref={headerRef} className={clsx({ 'selected-container': isSelected })}>
             <BaseNode
               data-testid={nodeData.title}
@@ -96,12 +95,13 @@ export const SourceDocumentNode: FunctionComponent<TreeSourceNodeProps> = ({
               isCollectionField={isCollectionField}
               isAttributeField={isAttributeField}
               title={<NodeTitle className="node__spacer" nodeData={nodeData} isDocument={isDocument} rank={rank} />}
+              rank={rank}
             ></BaseNode>
           </NodeContainer>
         </div>
 
         {hasChildren && isExpanded && (
-          <div className={clsx({ node__children: !isDocument })}>
+          <div className="node__children">
             {treeNode.children.map((childTreeNode) => (
               <SourceDocumentNode
                 treeNode={childTreeNode}

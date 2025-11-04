@@ -7,11 +7,15 @@ import { useDataMapper } from '../../hooks/useDataMapper';
 import { AddMappingNodeData, NodeReference } from '../../models/datamapper/visualization';
 import { VisualizationService } from '../../services/visualization.service';
 import { ConditionMenuAction } from './actions/ConditionMenuAction';
-import './Document.scss';
 import { NodeContainer } from './NodeContainer';
 import { NodeTitle } from './NodeTitle';
+import { BaseNode } from './Nodes/BaseNode';
+import './AddMappingNode.scss';
 
-export const AddMappingNode: FunctionComponent<{ nodeData: AddMappingNodeData }> = ({ nodeData }) => {
+export const AddMappingNode: FunctionComponent<{ nodeData: AddMappingNodeData; rank: number }> = ({
+  nodeData,
+  rank,
+}) => {
   const { refreshMappingTree } = useDataMapper();
   const { getNodeReference, setNodeReference } = useCanvas();
 
@@ -40,22 +44,28 @@ export const AddMappingNode: FunctionComponent<{ nodeData: AddMappingNodeData }>
       <NodeContainer ref={containerRef} nodeData={nodeData}>
         <div className={clsx({ node__add__mapping__header: true })}>
           <NodeContainer ref={headerRef} nodeData={nodeData}>
-            <section className="node__row" data-draggable={false}>
-              <span className="node__row">
-                <Icon className="node__spacer">
-                  <PlusIcon className="node__add__mapping__icon" />
-                </Icon>
-                <Icon className="node__spacer">
-                  <LayerGroupIcon className="node__add__mapping__icon" />
-                </Icon>
-                <NodeTitle
-                  className="node__spacer node__add__mapping__text"
-                  nodeData={nodeData}
-                  isDocument={false}
-                  rank={0}
-                />
-              </span>
-
+            <BaseNode
+              data-testid={nodeData.title}
+              isExpandable={false}
+              isDraggable={false}
+              title={
+                <>
+                  <Icon className="node__spacer">
+                    <PlusIcon className="node__add__mapping__icon" />
+                  </Icon>
+                  <Icon className="node__spacer">
+                    <LayerGroupIcon className="node__add__mapping__icon" />
+                  </Icon>
+                  <NodeTitle
+                    className="node__spacer node__add__mapping__text"
+                    nodeData={nodeData}
+                    isDocument={false}
+                    rank={rank}
+                  />
+                </>
+              }
+              rank={rank}
+            >
               <ActionList>
                 <ActionListGroup className="node__add__mapping__actions">
                   <ActionListItem>
@@ -70,7 +80,7 @@ export const AddMappingNode: FunctionComponent<{ nodeData: AddMappingNodeData }>
                   />
                 </ActionListGroup>
               </ActionList>
-            </section>
+            </BaseNode>
           </NodeContainer>
         </div>
       </NodeContainer>

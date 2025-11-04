@@ -1,0 +1,22 @@
+.node {
+  &__add__mapping {
+    &__header {
+      //border-bottom: 1px dashed var(--pf-t--global--color--disabled--100);
+      //border-left: 1px dashed var(--pf-t--global--color--disabled--100);
+      //padding-left: var(--pf-t--global--spacer--md);
+     // border-bottom-left-radius: var(--pf-t--global--border--radius--small);
+    }
+
+    &__text {
+      color: var(--pf-t--global--text--color--disabled);
+    }
+
+    &__icon {
+      fill: var(--pf-t--global--icon--color--disabled);
+    }
+
+    &__actions {
+      margin-left: auto;
+    }
+  }
+}
