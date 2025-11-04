@@ -6,7 +6,6 @@ import { DocumentTree } from '../../models/datamapper/document-tree';
 import { TargetDocumentNodeData } from '../../models/datamapper/visualization';
 import { TreeUIService } from '../../services/tree-ui.service';
 import { VisualizationService } from '../../services/visualization.service';
-import './Document.scss';
 import { BaseDocument } from './BaseDocument';
 import { TargetDocumentNode } from './TargetDocumentNode';
 import { XPathInputAction } from './actions/XPathInputAction';

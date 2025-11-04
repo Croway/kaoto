@@ -16,7 +16,6 @@ import { useCanvas } from '../../hooks/useCanvas';
 import { useDataMapper } from '../../hooks/useDataMapper';
 import { useToggle } from '../../hooks/useToggle';
 import { NodeReference } from '../../models/datamapper';
-import './Document.scss';
 import { NodeContainer } from './NodeContainer';
 import { ParameterInputPlaceholder } from './ParameterInputPlaceholder';
 import { ParameterDocument } from './ParameterDocument';

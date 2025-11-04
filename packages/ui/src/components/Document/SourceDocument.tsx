@@ -4,7 +4,6 @@ import { IDocument } from '../../models/datamapper/document';
 import { DocumentTree } from '../../models/datamapper/document-tree';
 import { DocumentNodeData } from '../../models/datamapper/visualization';
 import { TreeUIService } from '../../services/tree-ui.service';
-import './Document.scss';
 import { SourceDocumentNode } from './SourceDocumentNode';
 import { BaseDocument } from './BaseDocument';
 
