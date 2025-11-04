@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { FunctionComponent, MouseEvent, ReactNode, useCallback, useRef } from 'react';
 import { useCanvas } from '../../hooks/useCanvas';
 import { useMappingLinks } from '../../hooks/useMappingLinks';
+import { DocumentType } from '../../models/datamapper/document';
 import { DocumentTreeNode } from '../../models/datamapper/document-tree-node';
 import { NodeReference } from '../../models/datamapper/visualization';
 import { VisualizationService } from '../../services/visualization.service';
@@ -13,6 +14,7 @@ import { NodeContainer } from './NodeContainer';
 import { AttachSchemaButton } from './actions/AttachSchemaButton';
 import { DetachSchemaButton } from './actions/DetachSchemaButton';
 import { useDataMapper } from '../../hooks/useDataMapper';
+import './BaseDocument.scss';
 
 type DocumentProps = {
   header: ReactNode;
@@ -86,6 +88,8 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
     event.stopPropagation();
   }, []);
 
+  const isSourceBodyDocument = nodeData.document.documentType === DocumentType.SOURCE_BODY;
+
   return (
     <div
       data-testid={`document-${nodeData.id}`}
@@ -93,18 +97,12 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
       className={'document__container'}
       onClick={handleClickField}
     >
-      <NodeContainer ref={containerRef} nodeData={nodeData}>
-        <NodeContainer
-          nodeData={nodeData}
-          ref={headerRef}
-          className={clsx('document__header', { 'selected-container': isSelected })}
-        >
-          {hasChildren && (
-            <Icon className="node__expand node__spacer" onClick={handleClickToggle}>
-              {isExpanded && <ChevronDown data-testid={`expand-icon-${nodeData.title}`} />}
-              {!isExpanded && <ChevronRight data-testid={`collapse-icon-${nodeData.title}`} />}
-            </Icon>
-          )}
+      <NodeContainer ref={containerRef} nodeData={nodeData} enableDnD={!isSourceBodyDocument}>
+        <div ref={headerRef} className={clsx('document__header', { 'selected-container': isSelected })}>
+          <Icon className="node__expand node__spacer" onClick={hasChildren ? handleClickToggle : undefined}>
+            {hasChildren && isExpanded && <ChevronDown data-testid={`expand-icon-${nodeData.title}`} />}
+            {hasChildren && !isExpanded && <ChevronRight data-testid={`collapse-icon-${nodeData.title}`} />}
+          </Icon>
           {header}
           {/* Document-level actions */}
           <ActionListGroup
@@ -135,7 +133,7 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
               <ActionListItem key={'additional-action' + index}>{action}</ActionListItem>
             ))}
           </ActionListGroup>
-        </NodeContainer>
+        </div>
 
         {hasChildren && isExpanded && renderNodes && (
           <div className={clsx({ node__children: false })}>

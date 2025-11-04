@@ -1,0 +1,11 @@
+.node {
+  &__row {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+
+  &__spacer {
+    margin: 0 var(--pf-t--global--spacer--sm);
+  }
+}

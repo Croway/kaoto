@@ -5,6 +5,7 @@ import { FunctionComponent, MouseEventHandler, PropsWithChildren, ReactNode } fr
 import { IDataTestID } from '../../../models';
 import { Types } from '../../../models/datamapper';
 import { FieldIcon } from '../FieldIcon';
+import './BaseNode.scss';
 
 interface BaseNodeProps extends IDataTestID {
   /** Controls whether the Expansion icon is shown */
