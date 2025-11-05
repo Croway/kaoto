@@ -46,7 +46,13 @@ export const BaseNode: FunctionComponent<PropsWithChildren<BaseNodeProps>> = ({
   children,
 }) => {
   return (
-    <section className="node__row" data-draggable={isDraggable} data-expandable={isExpandable} data-selected={isSelected} style={{ '--node-rank': rank } as React.CSSProperties}>
+    <section
+      className="node__row"
+      data-draggable={isDraggable}
+      data-expandable={isExpandable}
+      data-selected={isSelected}
+      style={{ '--node-rank': rank } as React.CSSProperties}
+    >
       {isExpandable && (
         <Icon className="node__expand node__spacer" onClick={onExpandChange}>
           {isExpanded && <ChevronDown data-testid={`expand-icon-${dataTestId}`} />}
