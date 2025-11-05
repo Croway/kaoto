@@ -96,6 +96,7 @@ export const SourceDocumentNode: FunctionComponent<TreeSourceNodeProps> = ({
               isAttributeField={isAttributeField}
               title={<NodeTitle className="node__spacer" nodeData={nodeData} isDocument={isDocument} rank={rank} />}
               rank={rank}
+              isSelected={isSelected}
             ></BaseNode>
           </NodeContainer>
         </div>

@@ -105,6 +105,7 @@ export const TargetDocumentNode: FunctionComponent<DocumentNodeProps> = ({ treeN
               isAttributeField={isAttributeField}
               title={<NodeTitle className="node__spacer" nodeData={nodeData} isDocument={isDocument} rank={rank} />}
               rank={rank}
+              isSelected={isSelected}
             >
               {showNodeActions ? (
                 <TargetNodeActions
@@ -125,7 +126,7 @@ export const TargetDocumentNode: FunctionComponent<DocumentNodeProps> = ({ treeN
           <div className="node__children">
             {treeNode.children.map((childTreeNode) =>
               childTreeNode.nodeData instanceof AddMappingNodeData ? (
-                <AddMappingNode nodeData={childTreeNode.nodeData} key={childTreeNode.path} rank={rank + 2} />
+                <AddMappingNode nodeData={childTreeNode.nodeData} key={childTreeNode.path} rank={rank} />
               ) : (
                 <TargetDocumentNode
                   treeNode={childTreeNode}

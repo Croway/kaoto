@@ -1,12 +1,5 @@
 .node {
   &__add__mapping {
-    &__header {
-      //border-bottom: 1px dashed var(--pf-t--global--color--disabled--100);
-      //border-left: 1px dashed var(--pf-t--global--color--disabled--100);
-      //padding-left: var(--pf-t--global--spacer--md);
-     // border-bottom-left-radius: var(--pf-t--global--border--radius--small);
-    }
-
     &__text {
       color: var(--pf-t--global--text--color--disabled);
     }
@@ -18,5 +11,11 @@
     &__actions {
       margin-left: auto;
     }
+  }
+
+  // Remove left border from AddMappingNode row only
+  // stylelint-disable-next-line selector-class-pattern
+  &__row:has(.node__add__mapping__text) {
+    border-left: none;
   }
 }

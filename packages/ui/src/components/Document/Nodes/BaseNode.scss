@@ -9,12 +9,13 @@
     margin-left: calc(var(--node-rank, 0) * 0.85rem);
 
     // Leaf nodes (no children) have grey font color
-    &:not([data-expandable="true"]) {
+    &:not([data-expandable='true']) {
       color: var(--pf-t--global--color--text--subtle);
-      border-left :1px dashed gray;
+      border-left: 1px dashed gray;
     }
 
     // Make inputs/buttons fit within row height
+    // stylelint-disable-next-line selector-class-pattern
     .pf-v6-c-action-list__item,
     .pf-v6-c-input-group {
       height: 1.75rem;
@@ -36,7 +37,7 @@
   }
 
   // Selected row styling - blue font color and bold (overrides leaf node grey)
-  &__container[data-selected="true"] &__row {
+  &__row[data-selected='true'] {
     color: var(--pf-t--global--color--brand--default) !important;
     font-weight: bold;
   }
