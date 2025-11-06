@@ -31,15 +31,15 @@ export const AddMappingNode: FunctionComponent<{ nodeData: AddMappingNodeData; r
             <Icon className="node__spacer">
               <PlusIcon className="node__add__mapping__icon" />
             </Icon>
-            <Icon className="node__spacer">
-              <LayerGroupIcon className="node__add__mapping__icon" />
-            </Icon>
             <NodeTitle
               className="node__spacer node__add__mapping__text"
               nodeData={nodeData}
               isDocument={false}
               rank={rank}
             />
+            <Icon className="node__spacer">
+              <LayerGroupIcon className="node__add__mapping__icon" />
+            </Icon>
           </>
         }
         rank={rank}

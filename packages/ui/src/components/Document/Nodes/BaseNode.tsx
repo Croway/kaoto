@@ -54,7 +54,7 @@ export const BaseNode: FunctionComponent<PropsWithChildren<BaseNodeProps>> = ({
       style={{ '--node-rank': rank } as React.CSSProperties}
     >
       {isExpandable && (
-        <Icon className="node__expand node__spacer" onClick={onExpandChange}>
+        <Icon className="node__expand" onClick={onExpandChange}>
           {isExpanded && <ChevronDown data-testid={`expand-icon-${dataTestId}`} />}
           {!isExpanded && <ChevronRight data-testid={`collapse-icon-${dataTestId}`} />}
         </Icon>
@@ -65,22 +65,19 @@ export const BaseNode: FunctionComponent<PropsWithChildren<BaseNodeProps>> = ({
           <Draggable />
         </Icon>
       )}
-
-      <FieldIcon className="node__spacer" type={iconType} />
-
+      {title}
       {isCollectionField && (
         <Icon className="node__spacer" data-testid="collection-field-icon">
           <LayerGroupIcon />
         </Icon>
       )}
+      <FieldIcon className="node__spacer" type={iconType} />
 
       {isAttributeField && (
         <Icon className="node__spacer" data-testid="attribute-field-icon">
           <At />
         </Icon>
       )}
-
-      {title}
 
       {children}
     </section>

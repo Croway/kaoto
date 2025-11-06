@@ -1,3 +1,5 @@
+@use '../../../styles/dnd';
+
 .node {
   &__row {
     display: flex;
@@ -8,10 +10,15 @@
     // Rank-based indentation - expand icon + margins = ~1.5rem per level
     margin-left: calc(var(--node-rank, 0) * 0.85rem);
 
+    &[data-draggable='true'] {
+      @include dnd.cursor-grab;
+    }
+
     // Leaf nodes (no children) have grey font color
     &:not([data-expandable='true']) {
       color: var(--pf-t--global--color--text--subtle);
-      border-left: 1px dashed gray;
+      border-left: 1px dotted gray;
+      padding-left: var(--pf-t--global--spacer--sm);
     }
 
     // Make inputs/buttons fit within row height
@@ -42,7 +49,15 @@
     font-weight: bold;
   }
 
+  &__expand {
+    left: var(--pf-t--global--spacer--sm);
+  }
+
   &__spacer {
     margin: 0 var(--pf-t--global--spacer--sm);
+
+    svg {
+      display: block;
+    }
   }
 }
