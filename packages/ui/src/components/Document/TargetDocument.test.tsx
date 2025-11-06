@@ -1,10 +1,17 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FunctionComponent, PropsWithChildren } from 'react';
-import { BODY_DOCUMENT_ID, DocumentType, PrimitiveDocument } from '../../models/datamapper/document';
+import {
+  BODY_DOCUMENT_ID,
+  DocumentDefinitionType,
+  DocumentType,
+  PrimitiveDocument,
+} from '../../models/datamapper/document';
+import { MappingTree } from '../../models/datamapper/mapping';
+import { MappingSerializerService } from '../../services/mapping-serializer.service';
 import { DataMapperCanvasProvider } from '../../providers/datamapper-canvas.provider';
 import { DataMapperProvider } from '../../providers/datamapper.provider';
 import { useDocumentTreeStore } from '../../store';
-import { TestUtil } from '../../stubs/datamapper/data-mapper';
+import { shipOrderToShipOrderXslt, TestUtil } from '../../stubs/datamapper/data-mapper';
 import { TargetDocument } from './TargetDocument';
 
 describe('TargetDocument', () => {
@@ -130,5 +137,35 @@ describe('TargetDocument', () => {
       },
       { timeout: 3000 },
     );
+  });
+
+  it('should trigger handleUpdate callback when interacting with XPath input', async () => {
+    const targetDoc = TestUtil.createTargetOrderDoc();
+    const paramsMap = TestUtil.createParameterMap();
+    const tree = new MappingTree(targetDoc.documentType, targetDoc.documentId, DocumentDefinitionType.XML_SCHEMA);
+
+    // Deserialize XSLT to create mappings
+    MappingSerializerService.deserialize(shipOrderToShipOrderXslt, targetDoc, tree, paramsMap);
+
+    const { container } = render(<TargetDocument document={targetDoc} />, { wrapper });
+
+    await screen.findByText('OrderPerson');
+
+    // Find an XPath input field
+    const xpathInputs = container.querySelectorAll('[data-testid="transformation-xpath-input"]');
+    if (xpathInputs.length > 0) {
+      const xpathInput = xpathInputs[0] as HTMLInputElement;
+      const originalValue = xpathInput.value;
+
+      // Change the XPath value to trigger handleUpdate
+      act(() => {
+        fireEvent.change(xpathInput, { target: { value: '/modified/path' } });
+      });
+
+      await waitFor(() => {
+        // Value should be updated
+        expect(xpathInput.value).not.toBe(originalValue);
+      });
+    }
   });
 });

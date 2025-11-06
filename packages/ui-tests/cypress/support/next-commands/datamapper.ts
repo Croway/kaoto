@@ -87,8 +87,9 @@ Cypress.Commands.add('resetMappings', () => {
 });
 
 Cypress.Commands.add('checkFieldSelected', (type: string, format: string, fieldName: string, selected: boolean) => {
-  cy.get(`[data-testid^="node-${type}-${format}-${fieldName}`).should(selected ? 'not.exist' : 'be.visible');
-  cy.get(`[data-testid^="node-${type}-selected-${format}-${fieldName}`).should(selected ? 'be.visible' : 'not.exist');
+  cy.get(`[data-testid^="node-${type}-${format}-${fieldName}"]`)
+    .should('be.visible')
+    .and('have.attr', 'data-selected', selected.toString());
 });
 
 Cypress.Commands.add('checkMappingLineSelected', (selected: boolean) => {
@@ -107,7 +108,7 @@ Cypress.Commands.add('getDataMapperNode', (nodePath: string[], panelClass?: stri
     (acc, nodeId) => {
       return acc.find(`[data-testid^="${nodeId}"]`);
     },
-    panel.find(`[data-testid="document-${nodePath[0]}"]`),
+    panel.find(`[data-testid="${nodePath[0]}"]`),
   );
 });
 
@@ -158,7 +159,7 @@ Cypress.Commands.add(
     targetNode.find('[data-testid="transformation-actions-menu-toggle"]').first().click();
     cy.get('[data-testid="transformation-actions-foreach"]').click();
 
-    const updatedTargetNodePath = [...targetNodePath.slice(0, targetNodePath.length - 1), 'for-each'];
+    const updatedTargetNodePath = [...targetNodePath.slice(0, targetNodePath.length - 1), 'node-target-for-each'];
     cy.engageMapping(sourceNodePath, updatedTargetNodePath, testXPath);
   },
 );

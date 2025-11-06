@@ -337,9 +337,9 @@ describe('BaseDocument', () => {
       expect(renderNodes.mock.calls.length).toBeGreaterThan(0);
 
       // Verify all children are rendered
-      tree.root.children.forEach((child) => {
+      for (const child of tree.root.children) {
         expect(screen.getByTestId(`child-${child.path}`)).toBeInTheDocument();
-      });
+      }
     });
 
     it('should not render children when collapsed', () => {
@@ -403,9 +403,10 @@ describe('BaseDocument', () => {
         { wrapper },
       );
 
-      tree.root.children.forEach((child, index) => {
+      for (let index = 0; index < tree.root.children.length; index++) {
+        const child = tree.root.children[index];
         expect(renderNodes).toHaveBeenNthCalledWith(index + 1, child, true);
-      });
+      }
     });
   });
 

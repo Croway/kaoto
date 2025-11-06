@@ -177,19 +177,22 @@ export class MappingLinksService {
     // Offset to avoid collision with content
     const CONNECTION_OFFSET = 5;
 
+    const svgOffsetLeft = svgRect ? svgRect.left : 0;
+    const svgOffsetTop = svgRect ? svgRect.top : 0;
+
     const sourceX = sourceNodeRowRect
-      ? sourceNodeRowRect.right - CONNECTION_OFFSET - (svgRect ? svgRect.left : 0)
-      : sourceRect.right - (svgRect ? svgRect.left : 0);
+      ? sourceNodeRowRect.right - CONNECTION_OFFSET - svgOffsetLeft
+      : sourceRect.right - svgOffsetLeft;
 
     const targetX = targetNodeRowRect
-      ? targetNodeRowRect.left + CONNECTION_OFFSET - (svgRect ? svgRect.left : 0)
-      : targetRect.left - (svgRect ? svgRect.left : 0);
+      ? targetNodeRowRect.left + CONNECTION_OFFSET - svgOffsetLeft
+      : targetRect.left - svgOffsetLeft;
 
     return {
       x1: sourceX,
-      y1: sourceRect.top + (sourceRect.bottom - sourceRect.top) / 2 - (svgRect ? svgRect.top : 0),
+      y1: sourceRect.top + (sourceRect.bottom - sourceRect.top) / 2 - svgOffsetTop,
       x2: targetX,
-      y2: targetRect.top + (targetRect.bottom - targetRect.top) / 2 - (svgRect ? svgRect.top : 0),
+      y2: targetRect.top + (targetRect.bottom - targetRect.top) / 2 - svgOffsetTop,
     };
   }
 
