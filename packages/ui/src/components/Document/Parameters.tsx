@@ -19,6 +19,7 @@ import { NodeReference } from '../../models/datamapper';
 import { NodeContainer } from './NodeContainer';
 import { ParameterInputPlaceholder } from './ParameterInputPlaceholder';
 import { ParameterDocument } from './ParameterDocument';
+import './Parameters.scss';
 
 type ParametersProps = {
   isReadOnly: boolean;

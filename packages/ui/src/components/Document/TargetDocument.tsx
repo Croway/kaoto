@@ -11,6 +11,7 @@ import { TargetDocumentNode } from './TargetDocumentNode';
 import { XPathInputAction } from './actions/XPathInputAction';
 import { XPathEditorAction } from './actions/XPathEditorAction';
 import { DeleteMappingItemAction } from './actions/DeleteMappingItemAction';
+import { ConditionMenuAction } from './actions/ConditionMenuAction';
 
 type DocumentProps = {
   document: IDocument;
@@ -42,24 +43,32 @@ export const TargetDocument: FunctionComponent<DocumentProps> = ({ document }) =
     return VisualizationService.getExpressionItemForNode(documentNodeData);
   }, [documentNodeData]);
 
-  // XPath actions for primitive target body with mapping
-  const xpathActions = useMemo(() => {
-    if (!expressionItem) return [];
-    const actions = [
-      <XPathInputAction key="xpath-input" mapping={expressionItem} onUpdate={handleUpdate} />,
-      <XPathEditorAction
-        key="xpath-editor"
-        nodeData={documentNodeData}
-        mapping={expressionItem}
-        onUpdate={handleUpdate}
-      />,
-    ];
+  // Actions for target body document
+  const documentActions = useMemo(() => {
+    const actions = [];
 
-    // Add delete action if the mapping is deletable
-    if (VisualizationService.isDeletableNode(documentNodeData)) {
+    if (VisualizationService.allowConditionMenu(documentNodeData)) {
+      actions.push(<ConditionMenuAction key="condition-menu" nodeData={documentNodeData} onUpdate={handleUpdate} />);
+    }
+
+    // XPath actions for primitive target body with mapping
+    if (expressionItem) {
       actions.push(
-        <DeleteMappingItemAction key="delete-mapping" nodeData={documentNodeData} onDelete={handleUpdate} />,
+        <XPathInputAction key="xpath-input" mapping={expressionItem} onUpdate={handleUpdate} />,
+        <XPathEditorAction
+          key="xpath-editor"
+          nodeData={documentNodeData}
+          mapping={expressionItem}
+          onUpdate={handleUpdate}
+        />,
       );
+
+      // Add delete action if the mapping is deletable
+      if (VisualizationService.isDeletableNode(documentNodeData)) {
+        actions.push(
+          <DeleteMappingItemAction key="delete-mapping" nodeData={documentNodeData} onDelete={handleUpdate} />,
+        );
+      }
     }
 
     return actions;
@@ -75,7 +84,7 @@ export const TargetDocument: FunctionComponent<DocumentProps> = ({ document }) =
       treeNode={tree.root}
       documentId={documentId}
       isReadOnly={false}
-      additionalActions={xpathActions}
+      additionalActions={documentActions}
       renderNodes={(childNode) => <TargetDocumentNode treeNode={childNode} documentId={documentId} rank={1} />}
     />
   );

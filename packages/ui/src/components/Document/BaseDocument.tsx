@@ -1,5 +1,5 @@
 import { ActionListGroup, ActionListItem, Icon } from '@patternfly/react-core';
-import { ChevronDown, ChevronRight } from '@carbon/icons-react';
+import { ChevronDown, ChevronRight, Draggable } from '@carbon/icons-react';
 import clsx from 'clsx';
 import { FunctionComponent, MouseEvent, ReactNode, useCallback, useRef } from 'react';
 import { useCanvas } from '../../hooks/useCanvas';
@@ -103,6 +103,9 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
             {hasChildren && isExpanded && <ChevronDown data-testid={`expand-icon-${nodeData.title}`} />}
             {hasChildren && !isExpanded && <ChevronRight data-testid={`collapse-icon-${nodeData.title}`} />}
           </Icon>
+          <Icon className="node__spacer" data-drag-handler>
+            <Draggable />
+          </Icon>
           {header}
           {/* Document-level actions */}
           <ActionListGroup
@@ -112,6 +115,7 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
           >
             {!isReadOnly && (
               <>
+                {additionalActions}
                 <ActionListItem>
                   <AttachSchemaButton
                     documentType={documentType}
@@ -129,9 +133,6 @@ export const BaseDocument: FunctionComponent<DocumentProps> = ({
                 </ActionListItem>
               </>
             )}
-            {additionalActions.map((action, index) => (
-              <ActionListItem key={'additional-action' + index}>{action}</ActionListItem>
-            ))}
           </ActionListGroup>
         </div>
 
