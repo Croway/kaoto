@@ -12,6 +12,14 @@
   &__title {
     text-transform: capitalize;
   }
+
+  &__wizard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
 }
 
 .form-tabs {

@@ -1,0 +1,2713 @@
+{
+  "version" : "1.0",
+  "generatedBy" : "forage-maven-catalog-plugin",
+  "timestamp" : 1761126542106,
+  "components" : [ {
+    "artifactId" : "forage-agent-factories",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "multi.agent.names",
+      "type" : "String",
+      "description" : "multi.agent.names",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "multi.agent.id.source",
+      "type" : "String",
+      "description" : "multi.agent.id.source",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "multi.agent.id.source.header",
+      "type" : "String",
+      "description" : "multi.agent.id.source.header",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "multi.agent.id.source.property",
+      "type" : "String",
+      "description" : "multi.agent.id.source.property",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "multi.agent.id.source.variable",
+      "type" : "String",
+      "description" : "multi.agent.id.source.variable",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "provider.model.factory.class",
+      "type" : "String",
+      "description" : "provider.model.factory.class",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "provider.features",
+      "type" : "String",
+      "description" : "provider.features",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "provider.features.memory.factory.class",
+      "type" : "String",
+      "description" : "provider.features.memory.factory.class",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "provider.agent.class",
+      "type" : "String",
+      "description" : "provider.agent.class",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ {
+      "name" : "multi-agent",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "Multi-agent factory with ServiceLoader discovery and configuration-based selection",
+      "factoryType" : "Agent",
+      "className" : "org.apache.camel.forage.agent.factory.MultiAgentFactory",
+      "autowired" : false
+    }, {
+      "name" : "default-agent",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "Default agent factory with ServiceLoader discovery",
+      "factoryType" : "Agent",
+      "className" : "org.apache.camel.forage.agent.factory.DefaultAgentFactory",
+      "autowired" : false
+    } ]
+  }, {
+    "artifactId" : "forage-core-ai",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-core-common",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-infinispan",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "infinispan.cache.name",
+      "type" : "String",
+      "description" : "infinispan.cache.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.dimension",
+      "type" : "String",
+      "description" : "infinispan.dimension",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.distance",
+      "type" : "String",
+      "description" : "infinispan.distance",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.similarity",
+      "type" : "String",
+      "description" : "infinispan.similarity",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.cache.config",
+      "type" : "String",
+      "description" : "infinispan.cache.config",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.package.name",
+      "type" : "String",
+      "description" : "infinispan.package.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.file.name",
+      "type" : "String",
+      "description" : "infinispan.file.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.langchain.item.name",
+      "type" : "String",
+      "description" : "infinispan.langchain.item.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.metadata.item.name",
+      "type" : "String",
+      "description" : "infinispan.metadata.item.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.register.schema",
+      "type" : "String",
+      "description" : "infinispan.register.schema",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.create.cache",
+      "type" : "String",
+      "description" : "infinispan.create.cache",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.host",
+      "type" : "String",
+      "description" : "infinispan.host",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.port",
+      "type" : "String",
+      "description" : "infinispan.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.username",
+      "type" : "String",
+      "description" : "infinispan.username",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "infinispan.password",
+      "type" : "String",
+      "description" : "infinispan.password",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "infinispan",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Infinispan distributed data store",
+      "className" : "org.apache.camel.forage.vectordb.infinispan.InfinispanProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-core-vectordb",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-default",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-chroma",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "chroma.url",
+      "type" : "String",
+      "description" : "chroma.url",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "chroma.collection.name",
+      "type" : "String",
+      "description" : "chroma.collection.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "chroma.timeout",
+      "type" : "String",
+      "description" : "chroma.timeout",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "chroma.log.requests",
+      "type" : "String",
+      "description" : "chroma.log.requests",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "chroma.log.responses",
+      "type" : "String",
+      "description" : "chroma.log.responses",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "chroma",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Chroma embedding database",
+      "className" : "org.apache.camel.forage.vectordb.chroma.ChromaProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-redis",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "redis.host",
+      "type" : "String",
+      "description" : "redis.host",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.port",
+      "type" : "String",
+      "description" : "redis.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.user",
+      "type" : "String",
+      "description" : "redis.user",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.password",
+      "type" : "String",
+      "description" : "redis.password",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.dimension",
+      "type" : "String",
+      "description" : "redis.dimension",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.prefix",
+      "type" : "String",
+      "description" : "redis.prefix",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.index.name",
+      "type" : "String",
+      "description" : "redis.index.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.metadata.fields",
+      "type" : "String",
+      "description" : "redis.metadata.fields",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "redis.distance.metric",
+      "type" : "String",
+      "description" : "redis.distance.metric",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "redis",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Redis with vector search support",
+      "className" : "org.apache.camel.forage.vectordb.redis.RedisProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-pgvector",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "pgvector.host",
+      "type" : "String",
+      "description" : "pgvector.host",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.port",
+      "type" : "String",
+      "description" : "pgvector.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.user",
+      "type" : "String",
+      "description" : "pgvector.user",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.password",
+      "type" : "String",
+      "description" : "pgvector.password",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.database",
+      "type" : "String",
+      "description" : "pgvector.database",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.table",
+      "type" : "String",
+      "description" : "pgvector.table",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.dimension",
+      "type" : "String",
+      "description" : "pgvector.dimension",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.use.index",
+      "type" : "String",
+      "description" : "pgvector.use.index",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.index.list.size",
+      "type" : "String",
+      "description" : "pgvector.index.list.size",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.create.table",
+      "type" : "String",
+      "description" : "pgvector.create.table",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.drop.table.first",
+      "type" : "String",
+      "description" : "pgvector.drop.table.first",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pgvector.metadata.storage.config",
+      "type" : "String",
+      "description" : "pgvector.metadata.storage.config",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "pgvector",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "PostgreSQL with pgvector extension",
+      "className" : "org.apache.camel.forage.vectordb.pgvector.PgVectorProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-milvus",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "milvus.host",
+      "type" : "String",
+      "description" : "milvus.host",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.port",
+      "type" : "String",
+      "description" : "milvus.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.collection.name",
+      "type" : "String",
+      "description" : "milvus.collection.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.dimension",
+      "type" : "String",
+      "description" : "milvus.dimension",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.index.type",
+      "type" : "String",
+      "description" : "milvus.index.type",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.metric.type",
+      "type" : "String",
+      "description" : "milvus.metric.type",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.uri",
+      "type" : "String",
+      "description" : "milvus.uri",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.token",
+      "type" : "String",
+      "description" : "milvus.token",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.username",
+      "type" : "String",
+      "description" : "milvus.username",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.password",
+      "type" : "String",
+      "description" : "milvus.password",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.consistency.level",
+      "type" : "String",
+      "description" : "milvus.consistency.level",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.retrieve.embeddings.on.search",
+      "type" : "String",
+      "description" : "milvus.retrieve.embeddings.on.search",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.auto.flush.on.insert",
+      "type" : "String",
+      "description" : "milvus.auto.flush.on.insert",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.database.name",
+      "type" : "String",
+      "description" : "milvus.database.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.id.field.name",
+      "type" : "String",
+      "description" : "milvus.id.field.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.text.field.name",
+      "type" : "String",
+      "description" : "milvus.text.field.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.metadata.field.name",
+      "type" : "String",
+      "description" : "milvus.metadata.field.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "milvus.vector.field.name",
+      "type" : "String",
+      "description" : "milvus.vector.field.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "milvus",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Milvus vector database",
+      "className" : "org.apache.camel.forage.vectordb.milvus.MilvusProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-weaviate",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "weaviate.api.key",
+      "type" : "String",
+      "description" : "weaviate.api.key",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.scheme",
+      "type" : "String",
+      "description" : "weaviate.scheme",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.host",
+      "type" : "String",
+      "description" : "weaviate.host",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.port",
+      "type" : "String",
+      "description" : "weaviate.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.use.grpc.for.inserts",
+      "type" : "String",
+      "description" : "weaviate.use.grpc.for.inserts",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.secured.grpc",
+      "type" : "String",
+      "description" : "weaviate.secured.grpc",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.grpc.port",
+      "type" : "String",
+      "description" : "weaviate.grpc.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.object.class",
+      "type" : "String",
+      "description" : "weaviate.object.class",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.avoid.dups",
+      "type" : "String",
+      "description" : "weaviate.avoid.dups",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.consistency.level",
+      "type" : "String",
+      "description" : "weaviate.consistency.level",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.metadata.keys",
+      "type" : "String",
+      "description" : "weaviate.metadata.keys",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.text.field.name",
+      "type" : "String",
+      "description" : "weaviate.text.field.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "weaviate.metadata.field.name",
+      "type" : "String",
+      "description" : "weaviate.metadata.field.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "weaviate",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Weaviate vector database",
+      "className" : "org.apache.camel.forage.vectordb.weaviate.WeaviateProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-qdrant",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "qdrant.collection.name",
+      "type" : "String",
+      "description" : "qdrant.collection.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "qdrant.host",
+      "type" : "String",
+      "description" : "qdrant.host",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "qdrant.port",
+      "type" : "String",
+      "description" : "qdrant.port",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "qdrant.use.tls",
+      "type" : "String",
+      "description" : "qdrant.use.tls",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "qdrant.payload.text.key",
+      "type" : "String",
+      "description" : "qdrant.payload.text.key",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "qdrant.api.key",
+      "type" : "String",
+      "description" : "qdrant.api.key",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "qdrant",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Qdrant vector database",
+      "className" : "org.apache.camel.forage.vectordb.qdrant.QdrantProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-pinecone",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "pinecone.api.key",
+      "type" : "String",
+      "description" : "pinecone.api.key",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.index",
+      "type" : "String",
+      "description" : "pinecone.index",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.name.space",
+      "type" : "String",
+      "description" : "pinecone.name.space",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.metadata.text.key",
+      "type" : "String",
+      "description" : "pinecone.metadata.text.key",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.create.index",
+      "type" : "String",
+      "description" : "pinecone.create.index",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.environment",
+      "type" : "String",
+      "description" : "pinecone.environment",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.project.id",
+      "type" : "String",
+      "description" : "pinecone.project.id",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.dimension",
+      "type" : "String",
+      "description" : "pinecone.dimension",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.cloud",
+      "type" : "String",
+      "description" : "pinecone.cloud",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.region",
+      "type" : "String",
+      "description" : "pinecone.region",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "pinecone.deletion.protection",
+      "type" : "String",
+      "description" : "pinecone.deletion.protection",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "pinecone",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Pinecone managed vector database service",
+      "className" : "org.apache.camel.forage.vectordb.pinecone.PineconeProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-vectordb-neo4j",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "neo4j.index.name",
+      "type" : "String",
+      "description" : "neo4j.index.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.metadata.prefix",
+      "type" : "String",
+      "description" : "neo4j.metadata.prefix",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.embedding.property",
+      "type" : "String",
+      "description" : "neo4j.embedding.property",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.id.property",
+      "type" : "String",
+      "description" : "neo4j.id.property",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.label",
+      "type" : "String",
+      "description" : "neo4j.label",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.text.property",
+      "type" : "String",
+      "description" : "neo4j.text.property",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.database.name",
+      "type" : "String",
+      "description" : "neo4j.database.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.retrieval.query",
+      "type" : "String",
+      "description" : "neo4j.retrieval.query",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.dimension",
+      "type" : "String",
+      "description" : "neo4j.dimension",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.await.index.timeout",
+      "type" : "String",
+      "description" : "neo4j.await.index.timeout",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.full.text.index.name",
+      "type" : "String",
+      "description" : "neo4j.full.text.index.name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.full.text.query",
+      "type" : "String",
+      "description" : "neo4j.full.text.query",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.full.text.retrieval.query",
+      "type" : "String",
+      "description" : "neo4j.full.text.retrieval.query",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.auto.create.full.text",
+      "type" : "String",
+      "description" : "neo4j.auto.create.full.text",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.entity.creation.query",
+      "type" : "String",
+      "description" : "neo4j.entity.creation.query",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.uri",
+      "type" : "String",
+      "description" : "neo4j.uri",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.user",
+      "type" : "String",
+      "description" : "neo4j.user",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.password",
+      "type" : "String",
+      "description" : "neo4j.password",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.with.encryption",
+      "type" : "String",
+      "description" : "neo4j.with.encryption",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.connection.timeout",
+      "type" : "String",
+      "description" : "neo4j.connection.timeout",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.max.connection.lifetime",
+      "type" : "String",
+      "description" : "neo4j.max.connection.lifetime",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.max.connection.pool.size",
+      "type" : "String",
+      "description" : "neo4j.max.connection.pool.size",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    }, {
+      "name" : "neo4j.connection.acquisition.timeout",
+      "type" : "String",
+      "description" : "neo4j.connection.acquisition.timeout",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : null,
+      "configTag" : null
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "neo4j",
+      "components" : [ "camel-langchain4j-embeddings" ],
+      "description" : "Neo4j graph database with vector support",
+      "className" : "org.apache.camel.forage.vectordb.neo4j.Neo4jProvider",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-memory-infinispan",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "infinispan.server-list",
+      "type" : "string",
+      "description" : "Comma-separated list of Infinispan server addresses in format 'host1:port1,host2:port2'",
+      "required" : true,
+      "defaultValue" : "localhost:11222",
+      "example" : null,
+      "label" : "Server List",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "infinispan.cache-name",
+      "type" : "string",
+      "description" : "Name of the cache for storing chat messages",
+      "required" : true,
+      "defaultValue" : "chat-memory",
+      "example" : null,
+      "label" : "Cache Name",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "infinispan.username",
+      "type" : "string",
+      "description" : "Username for authentication (optional)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Username",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "infinispan.password",
+      "type" : "password",
+      "description" : "Password for authentication (optional)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Password",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "infinispan.realm",
+      "type" : "string",
+      "description" : "Security realm for authentication",
+      "required" : false,
+      "defaultValue" : "default",
+      "example" : null,
+      "label" : "Realm",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "infinispan.sasl-mechanism",
+      "type" : "string",
+      "description" : "SASL mechanism for authentication",
+      "required" : false,
+      "defaultValue" : "DIGEST-MD5",
+      "example" : null,
+      "label" : "SASL Mechanism",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "infinispan.connection-timeout",
+      "type" : "integer",
+      "description" : "Connection timeout in milliseconds",
+      "required" : false,
+      "defaultValue" : "60000",
+      "example" : null,
+      "label" : "Connection Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "infinispan.socket-timeout",
+      "type" : "integer",
+      "description" : "Socket timeout in milliseconds",
+      "required" : false,
+      "defaultValue" : "60000",
+      "example" : null,
+      "label" : "Socket Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "infinispan.max-retries",
+      "type" : "integer",
+      "description" : "Maximum number of connection retries",
+      "required" : false,
+      "defaultValue" : "3",
+      "example" : null,
+      "label" : "Max Retries",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "infinispan.pool.max-active",
+      "type" : "integer",
+      "description" : "Maximum number of active connections per server",
+      "required" : false,
+      "defaultValue" : "20",
+      "example" : null,
+      "label" : "Pool Max Active",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "infinispan.pool.min-idle",
+      "type" : "integer",
+      "description" : "Minimum number of idle connections per server",
+      "required" : false,
+      "defaultValue" : "1",
+      "example" : null,
+      "label" : "Pool Min Idle",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "infinispan.pool.max-wait",
+      "type" : "integer",
+      "description" : "Maximum time to wait for a connection in milliseconds",
+      "required" : false,
+      "defaultValue" : "3000",
+      "example" : null,
+      "label" : "Pool Max Wait",
+      "configTag" : "ADVANCED"
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "infinispan",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "Distributed storage using Infinispan",
+      "className" : "org.apache.camel.forage.memory.chat.infinispan.InfinispanMemoryBeanProvider",
+      "feature" : "Memory"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-memory-redis",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "redis.host",
+      "type" : "string",
+      "description" : "Redis server hostname or IP address",
+      "required" : true,
+      "defaultValue" : "localhost",
+      "example" : null,
+      "label" : "Host",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "redis.port",
+      "type" : "integer",
+      "description" : "Redis server port number",
+      "required" : true,
+      "defaultValue" : "6379",
+      "example" : null,
+      "label" : "Port",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "redis.password",
+      "type" : "password",
+      "description" : "Redis authentication password (optional)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Password",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "redis.database",
+      "type" : "integer",
+      "description" : "Redis database number to connect to",
+      "required" : false,
+      "defaultValue" : "0",
+      "example" : null,
+      "label" : "Database",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "redis.timeout",
+      "type" : "integer",
+      "description" : "Connection timeout in milliseconds",
+      "required" : false,
+      "defaultValue" : "2000",
+      "example" : null,
+      "label" : "Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.max-total",
+      "type" : "integer",
+      "description" : "Maximum number of connections in the pool",
+      "required" : false,
+      "defaultValue" : "10",
+      "example" : null,
+      "label" : "Pool Max Total",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.max-idle",
+      "type" : "integer",
+      "description" : "Maximum number of idle connections in the pool",
+      "required" : false,
+      "defaultValue" : "5",
+      "example" : null,
+      "label" : "Pool Max Idle",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.min-idle",
+      "type" : "integer",
+      "description" : "Minimum number of idle connections in the pool",
+      "required" : false,
+      "defaultValue" : "1",
+      "example" : null,
+      "label" : "Pool Min Idle",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.test-on-borrow",
+      "type" : "boolean",
+      "description" : "Test connections when borrowing from pool",
+      "required" : false,
+      "defaultValue" : "true",
+      "example" : null,
+      "label" : "Test On Borrow",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.test-on-return",
+      "type" : "boolean",
+      "description" : "Test connections when returning to pool",
+      "required" : false,
+      "defaultValue" : "true",
+      "example" : null,
+      "label" : "Test On Return",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.test-while-idle",
+      "type" : "boolean",
+      "description" : "Test idle connections periodically",
+      "required" : false,
+      "defaultValue" : "true",
+      "example" : null,
+      "label" : "Test While Idle",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "redis.pool.max-wait-millis",
+      "type" : "integer",
+      "description" : "Maximum time to wait for a connection from the pool in milliseconds",
+      "required" : false,
+      "defaultValue" : "2000",
+      "example" : null,
+      "label" : "Pool Max Wait",
+      "configTag" : "ADVANCED"
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "redis",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "Persistent storage using Redis",
+      "className" : "org.apache.camel.forage.memory.chat.redis.RedisMemoryBeanProvider",
+      "feature" : "Memory"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-memory-message-window",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "message-window",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "In-memory storage with configurable message window size",
+      "className" : "org.apache.camel.forage.memory.chat.messagewindow.MessageWindowChatMemoryBeanProvider",
+      "feature" : "Memory"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-model-azure-openai",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "azure.openai.api.key",
+      "type" : "password",
+      "description" : "Azure OpenAI API key for authentication",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "API Key",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "azure.openai.endpoint",
+      "type" : "string",
+      "description" : "Azure OpenAI resource endpoint URL (e.g., https://your-resource.openai.azure.com/)",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Endpoint",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "azure.openai.deployment.name",
+      "type" : "string",
+      "description" : "Azure OpenAI deployment name (e.g., gpt-35-turbo, gpt-4)",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Deployment Name",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "azure.openai.service.version",
+      "type" : "string",
+      "description" : "Azure OpenAI API service version (e.g., 2024-02-01)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Service Version",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "azure.openai.temperature",
+      "type" : "double",
+      "description" : "Temperature for response generation (0.0-2.0): lower values are more deterministic, higher values are more creative",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Temperature",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "azure.openai.max.tokens",
+      "type" : "integer",
+      "description" : "Maximum number of tokens in the model's response",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Max Tokens",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "azure.openai.top.p",
+      "type" : "double",
+      "description" : "Top-p (nucleus sampling) probability threshold (0.0-1.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Top P",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.presence.penalty",
+      "type" : "double",
+      "description" : "Presence penalty for discouraging new topic introduction (-2.0 to 2.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Presence Penalty",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.frequency.penalty",
+      "type" : "double",
+      "description" : "Frequency penalty for discouraging token repetition (-2.0 to 2.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Frequency Penalty",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.seed",
+      "type" : "integer",
+      "description" : "Seed for deterministic response generation (same seed + same input = similar output)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Seed",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.user",
+      "type" : "string",
+      "description" : "User identifier for tracking and monitoring API usage",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "User ID",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.timeout",
+      "type" : "integer",
+      "description" : "Request timeout in seconds",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.max.retries",
+      "type" : "integer",
+      "description" : "Maximum number of retry attempts for failed requests",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Max Retries",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "azure.openai.log.requests.and.responses",
+      "type" : "boolean",
+      "description" : "Enable logging of requests and responses (warning: may log sensitive data)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Log Requests",
+      "configTag" : "ADVANCED"
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "azure-openai",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "OpenAI models hosted on Microsoft Azure",
+      "className" : "org.apache.camel.forage.models.chat.azureopenai.AzureOpenAiProvider",
+      "feature" : "Chat Model"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-model-open-ai",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "openai.api.key",
+      "type" : "password",
+      "description" : "OpenAI API key for authentication",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "API Key",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "openai.model.name",
+      "type" : "string",
+      "description" : "The specific OpenAI model to use",
+      "required" : true,
+      "defaultValue" : "gpt-3.5-turbo",
+      "example" : null,
+      "label" : "Model Name",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "openai.base.url",
+      "type" : "string",
+      "description" : "Custom base URL for OpenAI API",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Base URL",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "openai.temperature",
+      "type" : "double",
+      "description" : "Temperature for response randomness (0.0-2.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Temperature",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "openai.max.tokens",
+      "type" : "integer",
+      "description" : "Maximum number of tokens to generate",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Max Tokens",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.top.p",
+      "type" : "double",
+      "description" : "Top-P (nucleus) sampling parameter (0.0-1.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Top P",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.frequency.penalty",
+      "type" : "double",
+      "description" : "Frequency penalty (-2.0 to 2.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Frequency Penalty",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.presence.penalty",
+      "type" : "double",
+      "description" : "Presence penalty (-2.0 to 2.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Presence Penalty",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.log.requests",
+      "type" : "boolean",
+      "description" : "Enable request logging",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Log Requests",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.log.responses",
+      "type" : "boolean",
+      "description" : "Enable response logging",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Log Responses",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.timeout",
+      "type" : "string",
+      "description" : "Request timeout duration",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "openai.http1",
+      "type" : "boolean",
+      "description" : "Use HTTP/1.1 instead of HTTP/2",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Use HTTP/1.1",
+      "configTag" : "ADVANCED"
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "openai",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "OpenAI API-compatible models",
+      "className" : "org.apache.camel.forage.models.chat.openai.OpenAIProvider",
+      "feature" : "Chat Model"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-model-ollama",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "ollama.base.url",
+      "type" : "string",
+      "description" : "The base URL of the Ollama server",
+      "required" : false,
+      "defaultValue" : "http://localhost:11434",
+      "example" : null,
+      "label" : "Base URL",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "ollama.model.name",
+      "type" : "string",
+      "description" : "The Ollama model to use",
+      "required" : false,
+      "defaultValue" : "llama3",
+      "example" : null,
+      "label" : "Model Name",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "ollama.temperature",
+      "type" : "double",
+      "description" : "Temperature for response randomness (0.0-2.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Temperature",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "ollama.top.k",
+      "type" : "integer",
+      "description" : "Top-K sampling parameter",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Top K",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "ollama.top.p",
+      "type" : "double",
+      "description" : "Top-P (nucleus) sampling parameter (0.0-1.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Top P",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "ollama.min.p",
+      "type" : "double",
+      "description" : "Minimum probability threshold (0.0-1.0)",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Min P",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "ollama.num.ctx",
+      "type" : "integer",
+      "description" : "Context window size",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Context Size",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "ollama.log.requests",
+      "type" : "boolean",
+      "description" : "Enable request logging",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Log Requests",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "ollama.log.responses",
+      "type" : "boolean",
+      "description" : "Enable response logging",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Log Responses",
+      "configTag" : "ADVANCED"
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "ollama",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "Locally-hosted models via Ollama (Llama, Mistral, etc.)",
+      "className" : "org.apache.camel.forage.models.chat.ollama.OllamaProvider",
+      "feature" : "Chat Model"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-model-google-gemini",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "google.api.key",
+      "type" : "password",
+      "description" : "Google AI API key for authentication",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "API Key",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "google.model.name",
+      "type" : "string",
+      "description" : "Google Gemini model name (e.g., gemini-pro, gemini-pro-vision, gemini-1.5-pro)",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Model Name",
+      "configTag" : "COMMON"
+    } ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "google-gemini",
+      "components" : [ "camel-langchain4j-agent" ],
+      "description" : "Google Gemini models",
+      "className" : "org.apache.camel.forage.models.chat.google.GoogleGeminiProvider",
+      "feature" : "Chat Model"
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ {
+      "name" : "CamelDataSourceFactory",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "Default DataSource factory with ServiceLoader discovery",
+      "factoryType" : "DataSource",
+      "className" : "org.apache.camel.forage.jdbc.DataSourceBeanFactory",
+      "autowired" : true
+    } ]
+  }, {
+    "artifactId" : "forage-jdbc-common",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "jdbc.db.kind",
+      "type" : "string",
+      "description" : "The database kind/type",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Database Kind",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.url",
+      "type" : "string",
+      "description" : "The JDBC connection URL",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "JDBC URL",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.connection.provider.class.name",
+      "type" : "string",
+      "description" : "The connection provider class name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Connection Provider Class",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.username",
+      "type" : "string",
+      "description" : "The database username",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Username",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "jdbc.password",
+      "type" : "string",
+      "description" : "The database password",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Password",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "jdbc.pool.initial.size",
+      "type" : "integer",
+      "description" : "Initial size of the connection pool",
+      "required" : false,
+      "defaultValue" : "5",
+      "example" : null,
+      "label" : "Initial Pool Size",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.pool.min.size",
+      "type" : "integer",
+      "description" : "Minimum size of the connection pool",
+      "required" : false,
+      "defaultValue" : "2",
+      "example" : null,
+      "label" : "Min Pool Size",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.pool.max.size",
+      "type" : "integer",
+      "description" : "Maximum size of the connection pool",
+      "required" : false,
+      "defaultValue" : "20",
+      "example" : null,
+      "label" : "Max Pool Size",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.pool.acquisition.timeout.seconds",
+      "type" : "integer",
+      "description" : "Timeout for acquiring a connection from the pool (seconds)",
+      "required" : false,
+      "defaultValue" : "5",
+      "example" : null,
+      "label" : "Acquisition Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.pool.validation.timeout.seconds",
+      "type" : "integer",
+      "description" : "Timeout for validating a connection (seconds)",
+      "required" : false,
+      "defaultValue" : "3",
+      "example" : null,
+      "label" : "Validation Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.pool.leak.timeout.minutes",
+      "type" : "integer",
+      "description" : "Timeout for detecting connection leaks (minutes)",
+      "required" : false,
+      "defaultValue" : "10",
+      "example" : null,
+      "label" : "Leak Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.pool.idle.validation.timeout.minutes",
+      "type" : "integer",
+      "description" : "Timeout for validating idle connections (minutes)",
+      "required" : false,
+      "defaultValue" : "3",
+      "example" : null,
+      "label" : "Idle Validation Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.timeout.seconds",
+      "type" : "integer",
+      "description" : "Timeout for transactions (seconds)",
+      "required" : false,
+      "defaultValue" : "30",
+      "example" : null,
+      "label" : "Transaction Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "provider.datasource.class",
+      "type" : "string",
+      "description" : "The provider datasource class name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Provider DataSource Class",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.transaction.enabled",
+      "type" : "boolean",
+      "description" : "Enable transaction management",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Transaction Enabled",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.transaction.node.id",
+      "type" : "string",
+      "description" : "The transaction node identifier",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Transaction Node ID",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.transaction.object.store.id",
+      "type" : "string",
+      "description" : "The transaction object store identifier",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Object Store ID",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.enable.recovery",
+      "type" : "boolean",
+      "description" : "Enable transaction recovery",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Enable Recovery",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.transaction.recovery.modules",
+      "type" : "string",
+      "description" : "Comma-separated list of transaction recovery modules",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Recovery Modules",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.expiry.scanners",
+      "type" : "string",
+      "description" : "Comma-separated list of transaction expiry scanners",
+      "required" : false,
+      "defaultValue" : "com.arjuna.ats.internal.arjuna.recovery.ExpiredTransactionStatusManagerScanner",
+      "example" : null,
+      "label" : "Expiry Scanners",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.xa.resource.orphan.filters",
+      "type" : "string",
+      "description" : "Comma-separated list of XA resource orphan filters",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "XA Orphan Filters",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.object.store.directory",
+      "type" : "string",
+      "description" : "Directory for transaction object store",
+      "required" : false,
+      "defaultValue" : "ObjectStore",
+      "example" : null,
+      "label" : "Object Store Directory",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.object.store.type",
+      "type" : "string",
+      "description" : "Type of transaction object store (file-system or jdbc)",
+      "required" : false,
+      "defaultValue" : "file-system",
+      "example" : null,
+      "label" : "Object Store Type",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.object.store.datasource",
+      "type" : "string",
+      "description" : "DataSource name for JDBC object store",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Object Store DataSource",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.object.store.create.table",
+      "type" : "boolean",
+      "description" : "Create object store table if not exists",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Create Table",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.object.store.drop.table",
+      "type" : "boolean",
+      "description" : "Drop object store table on shutdown",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Drop Table",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.transaction.object.store.table.prefix",
+      "type" : "string",
+      "description" : "Prefix for object store tables",
+      "required" : false,
+      "defaultValue" : "forage_",
+      "example" : null,
+      "label" : "Table Prefix",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jdbc.aggregation.repository.name",
+      "type" : "string",
+      "description" : "Name of the aggregation repository",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Repository Name",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.headers.to.store",
+      "type" : "string",
+      "description" : "Comma-separated list of headers to store",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Headers to Store",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.store.body",
+      "type" : "boolean",
+      "description" : "Store message body in repository",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Store Body",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.dead.letter.uri",
+      "type" : "string",
+      "description" : "Dead letter queue URI for failed aggregations",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Dead Letter URI",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.allow.serialized.headers",
+      "type" : "boolean",
+      "description" : "Allow serialized headers in repository",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Allow Serialized Headers",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.maximum.redeliveries",
+      "type" : "integer",
+      "description" : "Maximum number of redelivery attempts",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Max Redeliveries",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.use.recovery",
+      "type" : "boolean",
+      "description" : "Enable recovery for aggregation repository",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Use Recovery",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.aggregation.repository.propagation.behaviour.name",
+      "type" : "string",
+      "description" : "Transaction propagation behaviour name",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Propagation Behaviour",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.idempotent.repository.enabled",
+      "type" : "boolean",
+      "description" : "Enable idempotent repository",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Idempotent Enabled",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.idempotent.repository.table.name",
+      "type" : "string",
+      "description" : "Table name for idempotent repository",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Idempotent Table Name",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.idempotent.repository.table.create",
+      "type" : "boolean",
+      "description" : "Create idempotent table if not exists",
+      "required" : false,
+      "defaultValue" : "true",
+      "example" : null,
+      "label" : "Create Table",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jdbc.idempotent.repository.processor.name",
+      "type" : "string",
+      "description" : "Processor name for idempotent repository",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Processor Name",
+      "configTag" : "COMMON"
+    } ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-core-jta",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-starter",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ {
+      "name" : "CamelSpringBootDataSourceFactory",
+      "components" : [ "camel-sql" ],
+      "description" : "Default Spring Boot DataSource factory with ServiceLoader discovery",
+      "factoryType" : "DataSource",
+      "className" : "org.apache.camel.forage.springboot.jdbc.ForageDataSourceAutoConfiguration",
+      "autowired" : true
+    } ]
+  }, {
+    "artifactId" : "forage-spring-boot-common",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-postgresql",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "postgresql",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "PostgreSQL database",
+      "className" : "org.apache.camel.forage.jdbc.postgresql.PostgresqlJdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-core-jdbc",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-db2",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "db2",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "IBM DB2 database",
+      "className" : "org.apache.camel.forage.jdbc.db2.Db2Jdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-h2",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "h2",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "H2 database",
+      "className" : "org.apache.camel.forage.jdbc.h2.H2Jdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-hsqldb",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "hsqldb",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "HSQLDB database",
+      "className" : "org.apache.camel.forage.jdbc.hsqldb.HsqldbJdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-mariadb",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "mariadb",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "MariaDB database",
+      "className" : "org.apache.camel.forage.jdbc.mariadb.MariadbJdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-mssql",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "mssql",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "Microsoft SQL Server database",
+      "className" : "org.apache.camel.forage.jdbc.mssql.MssqlJdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-mysql",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "mysql",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "MySQL database",
+      "className" : "org.apache.camel.forage.jdbc.mysql.MysqlJdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jdbc-oracle",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "oracle",
+      "components" : [ "camel-sql", "camel-jdbc", "camel-spring-jdbc" ],
+      "description" : "Oracle database",
+      "className" : "org.apache.camel.forage.jdbc.oracle.OracleJdbc",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jms",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ {
+      "name" : "CamelConnectionFactoryFactory",
+      "components" : [ "camel-jms" ],
+      "description" : "Default ConnectionFactory factory with ServiceLoader discovery",
+      "factoryType" : "ConnectionFactory",
+      "className" : "org.apache.camel.forage.jms.ConnectionFactoryBeanFactory",
+      "autowired" : true
+    } ]
+  }, {
+    "artifactId" : "forage-jms-artemis",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "artemis",
+      "components" : [ "camel-jms" ],
+      "description" : "ActiveMQ Artemis message broker",
+      "className" : "org.apache.camel.forage.jms.artemis.ArtemisJms",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-core-jms",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jms-common",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ {
+      "name" : "jms.kind",
+      "type" : "string",
+      "description" : "The JMS broker kind/type",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "JMS Kind",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jms.broker.url",
+      "type" : "string",
+      "description" : "The JMS broker URL",
+      "required" : true,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Broker URL",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jms.username",
+      "type" : "string",
+      "description" : "The JMS broker username",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Username",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "jms.password",
+      "type" : "string",
+      "description" : "The JMS broker password",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Password",
+      "configTag" : "SECURITY"
+    }, {
+      "name" : "jms.client.id",
+      "type" : "string",
+      "description" : "The JMS client identifier",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Client ID",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jms.pool.enabled",
+      "type" : "boolean",
+      "description" : "Enable connection pooling",
+      "required" : false,
+      "defaultValue" : "true",
+      "example" : null,
+      "label" : "Pool Enabled",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.max.connections",
+      "type" : "integer",
+      "description" : "Maximum number of connections in the pool",
+      "required" : false,
+      "defaultValue" : "10",
+      "example" : null,
+      "label" : "Max Connections",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.max.sessions.per.connection",
+      "type" : "integer",
+      "description" : "Maximum number of sessions per connection",
+      "required" : false,
+      "defaultValue" : "500",
+      "example" : null,
+      "label" : "Max Sessions",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.idle.timeout.millis",
+      "type" : "long",
+      "description" : "Idle timeout for connections (milliseconds)",
+      "required" : false,
+      "defaultValue" : "30000",
+      "example" : null,
+      "label" : "Idle Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.expiry.timeout.millis",
+      "type" : "long",
+      "description" : "Expiry timeout for connections (milliseconds)",
+      "required" : false,
+      "defaultValue" : "0",
+      "example" : null,
+      "label" : "Expiry Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.connection.timeout.millis",
+      "type" : "long",
+      "description" : "Connection timeout (milliseconds)",
+      "required" : false,
+      "defaultValue" : "30000",
+      "example" : null,
+      "label" : "Connection Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.block.if.full",
+      "type" : "boolean",
+      "description" : "Block when pool is full",
+      "required" : false,
+      "defaultValue" : "true",
+      "example" : null,
+      "label" : "Block If Full",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.pool.block.if.full.timeout.millis",
+      "type" : "long",
+      "description" : "Timeout when blocking on full pool (milliseconds, -1 for infinite)",
+      "required" : false,
+      "defaultValue" : "-1",
+      "example" : null,
+      "label" : "Block Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.enabled",
+      "type" : "boolean",
+      "description" : "Enable transaction management",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Transaction Enabled",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jms.transaction.timeout.seconds",
+      "type" : "integer",
+      "description" : "Timeout for transactions (seconds)",
+      "required" : false,
+      "defaultValue" : "30",
+      "example" : null,
+      "label" : "Transaction Timeout",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.node.id",
+      "type" : "string",
+      "description" : "The transaction node identifier",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Transaction Node ID",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jms.transaction.object.store.id",
+      "type" : "string",
+      "description" : "The transaction object store identifier",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Object Store ID",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.enable.recovery",
+      "type" : "boolean",
+      "description" : "Enable transaction recovery",
+      "required" : false,
+      "defaultValue" : "false",
+      "example" : null,
+      "label" : "Enable Recovery",
+      "configTag" : "COMMON"
+    }, {
+      "name" : "jms.transaction.recovery.modules",
+      "type" : "string",
+      "description" : "Comma-separated list of transaction recovery modules",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "Recovery Modules",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.expiry.scanners",
+      "type" : "string",
+      "description" : "Comma-separated list of transaction expiry scanners",
+      "required" : false,
+      "defaultValue" : "com.arjuna.ats.internal.arjuna.recovery.ExpiredTransactionStatusManagerScanner",
+      "example" : null,
+      "label" : "Expiry Scanners",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.xa.resource.orphan.filters",
+      "type" : "string",
+      "description" : "Comma-separated list of XA resource orphan filters",
+      "required" : false,
+      "defaultValue" : null,
+      "example" : null,
+      "label" : "XA Orphan Filters",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.object.store.directory",
+      "type" : "string",
+      "description" : "Directory for transaction object store",
+      "required" : false,
+      "defaultValue" : "ObjectStore",
+      "example" : null,
+      "label" : "Object Store Directory",
+      "configTag" : "ADVANCED"
+    }, {
+      "name" : "jms.transaction.object.store.type",
+      "type" : "string",
+      "description" : "Type of transaction object store (file-system or jdbc)",
+      "required" : false,
+      "defaultValue" : "file-system",
+      "example" : null,
+      "label" : "Object Store Type",
+      "configTag" : "ADVANCED"
+    } ],
+    "capabilities" : null,
+    "beans" : [ ],
+    "factories" : [ ]
+  }, {
+    "artifactId" : "forage-jms-ibmmq",
+    "groupId" : "org.apache.camel.forage",
+    "version" : "1.0-SNAPSHOT",
+    "configurationProperties" : [ ],
+    "capabilities" : null,
+    "beans" : [ {
+      "name" : "ibmmq",
+      "components" : [ "camel-jms" ],
+      "description" : "IBM MQ message broker",
+      "className" : "org.apache.camel.forage.jms.ibmmq.IbmMqJms",
+      "feature" : ""
+    } ],
+    "factories" : [ ]
+  } ]
+}

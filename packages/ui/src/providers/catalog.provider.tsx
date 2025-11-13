@@ -5,6 +5,7 @@ import { Loading } from '../components/Loading';
 import { useRuntimeContext } from '../hooks/useRuntimeContext/useRuntimeContext';
 import { CamelCatalogIndex, CatalogKind, ComponentsCatalog, LoadingStatus } from '../models';
 import { CamelCatalogService } from '../models/visualization/flows';
+import { ForageCatalogService } from '../services/forage-catalog.service';
 import { CatalogSchemaLoader } from '../utils';
 
 export const CatalogContext = createContext<typeof CamelCatalogService>(CamelCatalogService);
@@ -22,6 +23,15 @@ export const CatalogLoaderProvider: FunctionComponent<PropsWithChildren> = (prop
   useEffect(() => {
     const indexFile = `${basePath}/${selectedCatalogIndexFile}`;
     const relativeBasePath = CatalogSchemaLoader.getRelativeBasePath(indexFile);
+
+    // Load Forage catalog for AI/ML components
+    // Path is relative to the public folder served by Vite
+    const forageCatalogPath = './forage-catalog/forage-catalog.json';
+    const forageCatalogPromise = ForageCatalogService.loadCatalog(forageCatalogPath).catch((error) => {
+      console.warn('Forage catalog not available, continuing without it:', error);
+      return null;
+    });
+
     fetch(indexFile)
       .then((response) => {
         setLoadingStatus(LoadingStatus.Loading);
@@ -103,6 +113,9 @@ export const CatalogLoaderProvider: FunctionComponent<PropsWithChildren> = (prop
         CamelCatalogService.setCatalogKey(CatalogKind.Loadbalancer, camelLoadbalancers.body);
         CamelCatalogService.setCatalogKey(CatalogKind.Kamelet, { ...kameletBoundaries.body, ...kamelets.body });
         CamelCatalogService.setCatalogKey(CatalogKind.Function, functions.body);
+
+        // Wait for Forage catalog to load (non-blocking)
+        await forageCatalogPromise;
       })
       .then(() => {
         setLoadingStatus(LoadingStatus.Loaded);
