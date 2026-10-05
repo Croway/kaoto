@@ -91,3 +91,25 @@ export const COMMAND_INFRASTRUCTURE_LOGS = 'kaoto.infrastructure.logs';
 export const COMMAND_INFRASTRUCTURE_COPY_URL = 'kaoto.infrastructure.copyUrl';
 
 export const COMMAND_INFRASTRUCTURE_COPY_PORT = 'kaoto.infrastructure.copyPort';
+
+export const COMMAND_KOMPANION_START = 'kaoto.kompanion.start';
+
+export const COMMAND_KOMPANION_STOP = 'kaoto.kompanion.stop';
+
+export const COMMAND_KOMPANION_REFRESH = 'kaoto.kompanion.refresh';
+
+export const COMMAND_KOMPANION_LAUNCH_DEMO = 'kaoto.kompanion.launchDemo';
+
+export const COMMAND_KOMPANION_ROUTE_START = 'kaoto.kompanion.route.start';
+
+export const COMMAND_KOMPANION_ROUTE_STOP = 'kaoto.kompanion.route.stop';
+
+export const COMMAND_KOMPANION_ROUTE_SUSPEND = 'kaoto.kompanion.route.suspend';
+
+export const COMMAND_KOMPANION_ROUTE_RESUME = 'kaoto.kompanion.route.resume';
+
+export const COMMAND_KOMPANION_APP_STOP = 'kaoto.kompanion.app.stop';
+
+export const COMMAND_KOMPANION_APP_SEND = 'kaoto.kompanion.app.send';
+
+export const COMMAND_KOMPANION_APP_TRACE = 'kaoto.kompanion.app.trace';

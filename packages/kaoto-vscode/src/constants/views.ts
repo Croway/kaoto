@@ -10,4 +10,6 @@ export const VIEW_OPENAPI = 'kaoto.openapi';
 
 export const VIEW_INFRASTRUCTURE = 'kaoto.infrastructure';
 
+export const VIEW_KOMPANION = 'kaoto.kompanion';
+
 export const VIEW_WHATS_NEW = 'kaoto.whatsNew';

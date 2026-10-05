@@ -606,6 +606,72 @@
         "title": "Import",
         "category": "Kaoto",
         "icon": "$(symbol-reference)"
+      },
+      {
+        "command": "kaoto.kompanion.start",
+        "title": "Start Kompanion",
+        "category": "Kaoto Kompanion",
+        "icon": "$(play)"
+      },
+      {
+        "command": "kaoto.kompanion.stop",
+        "title": "Stop Kompanion",
+        "category": "Kaoto Kompanion",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "kaoto.kompanion.refresh",
+        "title": "Refresh",
+        "category": "Kaoto Kompanion",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "kaoto.kompanion.launchDemo",
+        "title": "Launch Demo App",
+        "category": "Kaoto Kompanion",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "kaoto.kompanion.route.start",
+        "title": "Start Route",
+        "category": "Kaoto Kompanion",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "kaoto.kompanion.route.stop",
+        "title": "Stop Route",
+        "category": "Kaoto Kompanion",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "kaoto.kompanion.route.suspend",
+        "title": "Suspend Route",
+        "category": "Kaoto Kompanion",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "kaoto.kompanion.route.resume",
+        "title": "Resume Route",
+        "category": "Kaoto Kompanion",
+        "icon": "$(debug-continue)"
+      },
+      {
+        "command": "kaoto.kompanion.app.send",
+        "title": "Send Message",
+        "category": "Kaoto Kompanion",
+        "icon": "$(send)"
+      },
+      {
+        "command": "kaoto.kompanion.app.trace",
+        "title": "Watch Trace",
+        "category": "Kaoto Kompanion",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "kaoto.kompanion.app.stop",
+        "title": "Stop App",
+        "category": "Kaoto Kompanion",
+        "icon": "$(circle-slash)"
       }
     ],
     "keybindings": [
@@ -809,6 +875,50 @@
         {
           "command": "kaoto.infrastructure.copyPort",
           "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.start",
+          "when": "config.kaoto.kompanion.enabled"
+        },
+        {
+          "command": "kaoto.kompanion.stop",
+          "when": "config.kaoto.kompanion.enabled"
+        },
+        {
+          "command": "kaoto.kompanion.refresh",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.launchDemo",
+          "when": "config.kaoto.kompanion.enabled"
+        },
+        {
+          "command": "kaoto.kompanion.route.start",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.route.stop",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.route.suspend",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.route.resume",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.app.send",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.app.trace",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.app.stop",
+          "when": "false"
         }
       ],
       "editor/title": [
@@ -895,6 +1005,26 @@
           "command": "kaoto.openapi.import",
           "group": "navigation@1",
           "when": "view == kaoto.openapi"
+        },
+        {
+          "command": "kaoto.kompanion.start",
+          "group": "navigation@1",
+          "when": "view == kaoto.kompanion && !kaoto.kompanion.running"
+        },
+        {
+          "command": "kaoto.kompanion.stop",
+          "group": "navigation@1",
+          "when": "view == kaoto.kompanion && kaoto.kompanion.running"
+        },
+        {
+          "command": "kaoto.kompanion.launchDemo",
+          "group": "navigation@2",
+          "when": "view == kaoto.kompanion"
+        },
+        {
+          "command": "kaoto.kompanion.refresh",
+          "group": "navigation@3",
+          "when": "view == kaoto.kompanion && kaoto.kompanion.running"
         }
       ],
       "view/item/context": [
@@ -1017,6 +1147,41 @@
           "command": "kaoto.openapi.delete",
           "when": "view == kaoto.openapi && (viewItem == openapi || viewItem =~ /^openapi-folder/)",
           "group": "navigation@2"
+        },
+        {
+          "command": "kaoto.kompanion.route.start",
+          "group": "inline@1",
+          "when": "view == kaoto.kompanion && viewItem =~ /^kompanion-route-(Stopped|Suspended)$/"
+        },
+        {
+          "command": "kaoto.kompanion.route.resume",
+          "group": "inline@2",
+          "when": "view == kaoto.kompanion && viewItem == kompanion-route-Suspended"
+        },
+        {
+          "command": "kaoto.kompanion.route.suspend",
+          "group": "inline@3",
+          "when": "view == kaoto.kompanion && viewItem == kompanion-route-Started"
+        },
+        {
+          "command": "kaoto.kompanion.route.stop",
+          "group": "inline@4",
+          "when": "view == kaoto.kompanion && viewItem =~ /^kompanion-route-(Started|Suspended)$/"
+        },
+        {
+          "command": "kaoto.kompanion.app.send",
+          "group": "inline@1",
+          "when": "view == kaoto.kompanion && viewItem == kompanion-execution"
+        },
+        {
+          "command": "kaoto.kompanion.app.trace",
+          "group": "inline@2",
+          "when": "view == kaoto.kompanion && viewItem == kompanion-execution"
+        },
+        {
+          "command": "kaoto.kompanion.app.stop",
+          "group": "inline@3",
+          "when": "view == kaoto.kompanion && viewItem == kompanion-execution"
         }
       ]
     },
@@ -1067,6 +1232,11 @@
         "view": "kaoto.infrastructure",
         "contents": "You have not yet added a folder to the workspace.\n[Open Folder](command:vscode.openFolder)",
         "when": "workspaceFolderCount == 0"
+      },
+      {
+        "view": "kaoto.kompanion",
+        "contents": "The Kaoto Kompanion drives running Camel apps through camel-cli-connector (file or WebSocket transport).\n[Start Kompanion](command:kaoto.kompanion.start)\nThen [launch a demo app](command:kaoto.kompanion.launchDemo), or run any Camel app with camel-cli-connector on this machine.",
+        "when": "!kaoto.kompanion.running"
       }
     ],
     "configuration": [
@@ -1396,6 +1566,46 @@
             "tags": [
               "experimental"
             ]
+          },
+          "kaoto.kompanion.enabled": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Enable the `Kompanion` view: drive running Camel apps through the Kaoto Kompanion (camel-cli-connector, file or WebSocket transport). Experimental.",
+            "scope": "window",
+            "order": 3,
+            "tags": [
+              "experimental"
+            ]
+          },
+          "kaoto.kompanion.jar": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Path of the Kaoto Kompanion runner jar (`kaoto-kompanion-*-runner.jar`). Empty: the one built in the Kaoto repository next to the extension.",
+            "scope": "machine",
+            "order": 4,
+            "tags": [
+              "experimental"
+            ]
+          },
+          "kaoto.kompanion.java": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Java executable (21 or later) for the Kompanion and the demo apps. Empty: `java` from the `PATH`.",
+            "scope": "machine",
+            "order": 5,
+            "tags": [
+              "experimental"
+            ]
+          },
+          "kaoto.kompanion.demoApp": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Folder of the camel-cli-connector demo app (`packages/kompanion/demo-apps/cli-connector-demo`), built with its `build.sh`. Empty: the one in the Kaoto repository next to the extension.",
+            "scope": "machine",
+            "order": 6,
+            "tags": [
+              "experimental"
+            ]
           }
         }
       }
@@ -1442,6 +1652,14 @@
           "icon": "icons/kaoto.png",
           "initialSize": 2,
           "when": "!virtualWorkspace"
+        },
+        {
+          "id": "kaoto.kompanion",
+          "name": "Kompanion (experimental)",
+          "contextualTitle": "Kaoto",
+          "icon": "icons/kaoto.png",
+          "initialSize": 2,
+          "when": "!virtualWorkspace && config.kaoto.kompanion.enabled"
         },
         {
           "id": "kaoto.openapi",

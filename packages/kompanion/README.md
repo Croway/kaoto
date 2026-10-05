@@ -104,6 +104,23 @@ execution `pid-<pid>`, without launching them and without any change to the app.
   warning when the process outlives `kaoto.kompanion.file-transport.exit-timeout`.
 - Files left by a killed app are skipped, never deleted.
 
+## Try it from VS Code
+
+The Kaoto VS Code extension has an experimental `Kompanion` view (setting `kaoto.kompanion.enabled`):
+
+1. Build the Kompanion (`mvn package -pl kaoto-kompanion -am` here) and the demo app
+   (`demo-apps/cli-connector-demo/build.sh`: Camel 4.18.4, 4.22.1 and 4.23.0-SNAPSHOT).
+2. Run the extension from the monorepo (the `Run Extension` launch configuration), enable
+   `kaoto.kompanion.enabled`, open the Kaoto sidebar and click `Start Kompanion`.
+3. `Launch Demo App` (the rocket): 4.18 and 4.22 run on the file transport and show up as
+   `pid-<pid>`, 4.23 connects over WebSocket. Any other Camel app with camel-cli-connector on the
+   machine shows up too.
+4. Every app lists its routes with their state and counters, live. Start, stop, suspend and resume
+   routes, send a message, watch the trace (turned on only while watched), stop the app.
+
+The jar and the demo app are found in the repository next to the extension; the settings
+`kaoto.kompanion.jar`, `kaoto.kompanion.demoApp` and `kaoto.kompanion.java` point elsewhere.
+
 ## Commands API
 
 All commands are sent as a `POST` to:

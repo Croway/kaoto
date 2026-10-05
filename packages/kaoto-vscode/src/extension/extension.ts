@@ -36,6 +36,7 @@ import { DeploymentsRegistrar } from './registrars/DeploymentsRegistrar';
 import { TestsRegistrar } from './registrars/TestsRegistrar';
 import { InfrastructureRegistrar } from './registrars/InfrastructureRegistrar';
 import { OpenApiRegistrar } from './registrars/OpenApiRegistrar';
+import { KompanionRegistrar } from './registrars/KompanionRegistrar';
 
 let backendProxy: VsCodeBackendProxy;
 let telemetryService: TelemetryService;
@@ -99,6 +100,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		new InfrastructureRegistrar(context, telemetryService),
 		new TestsRegistrar(context, telemetryService),
 		new OpenApiRegistrar(context, telemetryService),
+		new KompanionRegistrar(context),
 		new ExecutorRegistrar(context, telemetryService, catalogService),
 		new LifecycleRegistrar(context, telemetryService),
 	];

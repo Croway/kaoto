@@ -23,3 +23,11 @@ export const KAOTO_NODE_TOOLBAR_TRIGGER_SETTING_ID = 'kaoto.nodeToolbarTrigger';
 export const KAOTO_COLOR_THEME_SETTING_ID = 'kaoto.colorTheme';
 
 export const KAOTO_CANVAS_LAYOUT_DIRECTION_SETTING_ID = 'kaoto.canvasLayoutDirection';
+
+export const KAOTO_KOMPANION_ENABLED_SETTING_ID = 'kaoto.kompanion.enabled';
+
+export const KAOTO_KOMPANION_JAR_SETTING_ID = 'kaoto.kompanion.jar';
+
+export const KAOTO_KOMPANION_JAVA_SETTING_ID = 'kaoto.kompanion.java';
+
+export const KAOTO_KOMPANION_DEMO_APP_SETTING_ID = 'kaoto.kompanion.demoApp';
