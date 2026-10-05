@@ -17,6 +17,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as vscode from 'vscode';
 import {
+	COMMAND_KOMPANION_APP_CANVAS,
 	COMMAND_KOMPANION_APP_SEND,
 	COMMAND_KOMPANION_APP_STOP,
 	COMMAND_KOMPANION_APP_TRACE,
@@ -36,7 +37,9 @@ import {
 import { KompanionClient, KompanionCommandResult } from '../../kompanion/KompanionClient';
 import { KompanionProcess } from '../../kompanion/KompanionProcess';
 import { KompanionExecutionItem, KompanionProvider, KompanionRouteItem } from '../../kompanion/KompanionProvider';
+import { KompanionOverlay } from '../../kompanion/KompanionOverlay';
 import { IRegistrar } from './IRegistrar';
+import type { VsCodeKieEditorStore } from '@kie-tools-core/vscode-extension/dist/VsCodeKieEditorStore';
 
 const RUNNING_CONTEXT_KEY = 'kaoto.kompanion.running';
 
@@ -54,8 +57,16 @@ export class KompanionRegistrar implements IRegistrar {
 	// executionId -> the trace being watched
 	private readonly traces = new Map<string, AbortController>();
 	private demoCount = 0;
+	// the execution shown on the canvas of the open editors
+	private onCanvas: string | undefined;
+	private overlayPending: ReturnType<typeof setTimeout> | undefined;
 
-	constructor(private readonly context: vscode.ExtensionContext) {}
+	constructor(
+		private readonly context: vscode.ExtensionContext,
+		kieEditorStore: VsCodeKieEditorStore,
+	) {
+		KompanionOverlay.init(kieEditorStore);
+	}
 
 	register(): void {
 		const view = vscode.window.createTreeView(VIEW_KOMPANION, { treeDataProvider: this.provider });
@@ -77,6 +88,12 @@ export class KompanionRegistrar implements IRegistrar {
 			vscode.commands.registerCommand(COMMAND_KOMPANION_APP_STOP, (item: KompanionExecutionItem) => this.stopApp(item)),
 			vscode.commands.registerCommand(COMMAND_KOMPANION_APP_SEND, (item: KompanionExecutionItem) => this.send(item)),
 			vscode.commands.registerCommand(COMMAND_KOMPANION_APP_TRACE, (item: KompanionExecutionItem) => this.toggleTrace(item)),
+			vscode.commands.registerCommand(COMMAND_KOMPANION_APP_CANVAS, (item: KompanionExecutionItem) => this.toggleCanvas(item)),
+			this.provider.onDidChangeRoutes((executionId) => {
+				if (executionId === this.onCanvas) {
+					this.pushOverlay();
+				}
+			}),
 		);
 		void vscode.commands.executeCommand('setContext', RUNNING_CONTEXT_KEY, false);
 	}
@@ -114,6 +131,8 @@ export class KompanionRegistrar implements IRegistrar {
 	}
 
 	private onKompanionExit(): void {
+		this.onCanvas = undefined;
+		KompanionOverlay.set(undefined);
 		this.traces.forEach((t) => t.abort());
 		this.traces.clear();
 		this.provider.disconnect();
@@ -222,6 +241,25 @@ export class KompanionRegistrar implements IRegistrar {
 					this.traceOutput.appendLine(`trace stream failed: ${error}`);
 				}
 			});
+	}
+
+	/** Shows the runtime data of an app on the canvas of the open Kaoto editors, or stops showing it. */
+	private toggleCanvas(item: KompanionExecutionItem): void {
+		const executionId = item.execution.executionId;
+		this.onCanvas = this.onCanvas === executionId ? undefined : executionId;
+		this.output.appendLine(this.onCanvas ? `[kaoto] showing ${executionId} on the canvas` : '[kaoto] nothing shown on the canvas');
+		this.pushOverlay();
+	}
+
+	private pushOverlay(): void {
+		// status slices arrive by bursts: one push for them
+		if (this.overlayPending) {
+			return;
+		}
+		this.overlayPending = setTimeout(() => {
+			this.overlayPending = undefined;
+			KompanionOverlay.set(this.onCanvas ? this.provider.overlay(this.onCanvas) : undefined);
+		}, 300);
 	}
 
 	private async command(executionId: string, command: Record<string, unknown>, what: string): Promise<void> {

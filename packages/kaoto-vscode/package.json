@@ -672,6 +672,12 @@
         "title": "Stop App",
         "category": "Kaoto Kompanion",
         "icon": "$(circle-slash)"
+      },
+      {
+        "command": "kaoto.kompanion.app.canvas",
+        "title": "Show on Canvas",
+        "category": "Kaoto Kompanion",
+        "icon": "$(type-hierarchy)"
       }
     ],
     "keybindings": [
@@ -918,6 +924,10 @@
         },
         {
           "command": "kaoto.kompanion.app.stop",
+          "when": "false"
+        },
+        {
+          "command": "kaoto.kompanion.app.canvas",
           "when": "false"
         }
       ],
@@ -1180,6 +1190,11 @@
         },
         {
           "command": "kaoto.kompanion.app.stop",
+          "group": "inline@4",
+          "when": "view == kaoto.kompanion && viewItem == kompanion-execution"
+        },
+        {
+          "command": "kaoto.kompanion.app.canvas",
           "group": "inline@3",
           "when": "view == kaoto.kompanion && viewItem == kompanion-execution"
         }

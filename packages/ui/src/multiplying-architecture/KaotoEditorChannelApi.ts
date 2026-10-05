@@ -1,5 +1,6 @@
 import { Suggestion, SuggestionRequestContext } from '@kaoto/forms';
 import { KogitoEditorChannelApi } from '@kie-tools-core/editor/dist/api';
+import { SharedValueProvider } from '@kie-tools-core/envelope-bus/dist/api';
 
 import { CatalogKind, FileTypes, FileTypesResponse, StepUpdateAction } from '../models';
 import {
@@ -7,6 +8,7 @@ import {
   CamelQuarkusMavenInformation,
   CamelSpringBootMavenInformation,
 } from '../models/runtime-maven-information';
+import { RuntimeOverlay } from '../models/runtime-overlay';
 import { ISettingsModel } from '../models/settings';
 
 export interface KaotoEditorChannelApi extends KogitoEditorChannelApi {
@@ -104,4 +106,10 @@ export interface KaotoEditorChannelApi extends KogitoEditorChannelApi {
    * @param stepName The name of the step that was added.
    */
   onStepUpdated(action: StepUpdateAction, stepType: CatalogKind, stepName: string): Promise<void>;
+
+  /**
+   * Runtime data of a running app to show on the canvas (e.g. from the Kaoto Kompanion), pushed by the host while the
+   * editor is open.
+   */
+  kaoto_runtimeOverlay(): SharedValueProvider<RuntimeOverlay>;
 }

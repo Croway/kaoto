@@ -6,6 +6,7 @@ import { ElementType, FunctionComponent, Ref } from 'react';
 
 import { IVisualizationNode } from '../../../../models';
 import { FloatingCircle } from '../FloatingCircle/FloatingCircle';
+import { RuntimeOverlayBadge } from './RuntimeOverlayBadge';
 
 export interface CustomNodeContainerProps {
   width: number;
@@ -72,6 +73,7 @@ export const CustomNodeContainer: FunctionComponent<CustomNodeContainerProps> = 
             </Icon>
           </FloatingCircle>
         )}
+        <RuntimeOverlayBadge vizNode={vizNode} />
         {isDisabled && (
           <FloatingCircle className="step-icon step-icon__disabled">
             <Icon status="danger" size="lg">

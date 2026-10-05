@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import type { RuntimeOverlay } from '@kaoto/kaoto/models';
 import * as vscode from 'vscode';
 import { KompanionClient, KompanionEvent, KompanionExecution } from './KompanionClient';
 
@@ -21,6 +22,8 @@ interface RouteState {
 	state: string;
 	total: number;
 	failed: number;
+	// step id -> its counters
+	steps: Record<string, { total: number; failed: number }>;
 }
 
 interface ExecutionState {
@@ -65,6 +68,9 @@ export class KompanionRouteItem extends vscode.TreeItem {
 export class KompanionProvider implements vscode.TreeDataProvider<vscode.TreeItem>, vscode.Disposable {
 	private readonly changed = new vscode.EventEmitter<void>();
 	readonly onDidChangeTreeData = this.changed.event;
+	private readonly routesChanged = new vscode.EventEmitter<string>();
+	/** Fired with the execution id when the state of one of its routes changed. */
+	readonly onDidChangeRoutes = this.routesChanged.event;
 
 	private client: KompanionClient | undefined;
 	private readonly executions = new Map<string, ExecutionState>();
@@ -103,6 +109,20 @@ export class KompanionProvider implements vscode.TreeDataProvider<vscode.TreeIte
 				this.changed.fire();
 			}, 200);
 		}
+	}
+
+	/** The runtime data of an execution for the canvas, or undefined when it is not followed. */
+	overlay(executionId: string): RuntimeOverlay | undefined {
+		const execution = this.executions.get(executionId);
+		if (!execution) {
+			return undefined;
+		}
+		const routes: RuntimeOverlay['routes'] = {};
+		execution.routes.forEach((r) => {
+			routes[r.routeId] = { state: r.state, total: r.total, failed: r.failed, steps: r.steps };
+		});
+		const info = execution.info;
+		return { label: `${info.name ?? executionId} (Camel ${info.camelVersion ?? '?'})`, routes };
 	}
 
 	getTreeItem(element: vscode.TreeItem): vscode.TreeItem {
@@ -178,14 +198,25 @@ export class KompanionProvider implements vscode.TreeDataProvider<vscode.TreeIte
 			} else if (event.removed) {
 				execution.routes.delete(event.routeId);
 			} else {
+				const steps: RouteState['steps'] = {};
+				for (const processor of event.data?.processors ?? []) {
+					if (processor.id) {
+						steps[processor.id] = {
+							total: Number(processor.statistics?.exchangesTotal ?? 0),
+							failed: Number(processor.statistics?.exchangesFailed ?? 0),
+						};
+					}
+				}
 				execution.routes.set(event.routeId, {
 					routeId: event.routeId,
 					state: event.data?.state ?? '?',
 					total: Number(event.data?.statistics?.exchangesTotal ?? 0),
 					failed: Number(event.data?.statistics?.exchangesFailed ?? 0),
+					steps,
 				});
 			}
 			this.refresh();
+			this.routesChanged.fire(execution.info.executionId);
 		} else if (event.type === 'camel.connector.result' || event.type === 'kompanion.unavailable' || event.type === 'kompanion.gap') {
 			this.output.appendLine(`[${execution.info.executionId}] ${JSON.stringify(event)}`);
 		}
@@ -194,5 +225,6 @@ export class KompanionProvider implements vscode.TreeDataProvider<vscode.TreeIte
 	dispose(): void {
 		this.disconnect();
 		this.changed.dispose();
+		this.routesChanged.dispose();
 	}
 }

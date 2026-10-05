@@ -20,6 +20,7 @@ import { KaotoResourceProvider } from '../providers';
 import { EntitiesProvider } from '../providers/entities.provider';
 import { ReloadProvider } from '../providers/reload.provider';
 import { RuntimeProvider } from '../providers/runtime.provider';
+import { RuntimeOverlayProvider } from '../providers/runtime-overlay.provider';
 import { SettingsProvider } from '../providers/settings.provider';
 import { SourceCodeSync } from '../providers/source-code-sync';
 import { promiseTimeout } from '../utils';
@@ -188,24 +189,26 @@ export class KaotoEditorApp implements Editor {
                 >
                   <CatalogLoaderProvider getResourcesContentByType={this.getResourcesContentByType}>
                     <EntitiesProvider>
-                      <KaotoBridge
-                        channelType={this.initArgs.channel}
-                        onReady={this.sendReady}
-                        setNotifications={this.sendNotifications}
-                        onStateControlCommandUpdate={this.sendStateControlCommand}
-                        getMetadata={this.getMetadata}
-                        setMetadata={this.setMetadata}
-                        getResourceContent={this.getResourceContent}
-                        saveResourceContent={this.saveResourceContent}
-                        isResourceExist={this.isResourceExist}
-                        deleteResource={this.deleteResource}
-                        askUserForFileSelection={this.askUserForFileSelection}
-                        getSuggestions={this.getSuggestions}
-                        shouldSaveSchema={false}
-                        onStepUpdated={this.onStepUpdated}
-                      >
-                        <RouterProvider router={kaotoEditorRouter} />
-                      </KaotoBridge>
+                      <RuntimeOverlayProvider consumer={this.envelopeContext.channelApi.shared.kaoto_runtimeOverlay}>
+                        <KaotoBridge
+                          channelType={this.initArgs.channel}
+                          onReady={this.sendReady}
+                          setNotifications={this.sendNotifications}
+                          onStateControlCommandUpdate={this.sendStateControlCommand}
+                          getMetadata={this.getMetadata}
+                          setMetadata={this.setMetadata}
+                          getResourceContent={this.getResourceContent}
+                          saveResourceContent={this.saveResourceContent}
+                          isResourceExist={this.isResourceExist}
+                          deleteResource={this.deleteResource}
+                          askUserForFileSelection={this.askUserForFileSelection}
+                          getSuggestions={this.getSuggestions}
+                          shouldSaveSchema={false}
+                          onStepUpdated={this.onStepUpdated}
+                        >
+                          <RouterProvider router={kaotoEditorRouter} />
+                        </KaotoBridge>
+                      </RuntimeOverlayProvider>
                     </EntitiesProvider>
                   </CatalogLoaderProvider>
                 </RuntimeProvider>

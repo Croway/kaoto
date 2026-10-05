@@ -113,3 +113,5 @@ export const COMMAND_KOMPANION_APP_STOP = 'kaoto.kompanion.app.stop';
 export const COMMAND_KOMPANION_APP_SEND = 'kaoto.kompanion.app.send';
 
 export const COMMAND_KOMPANION_APP_TRACE = 'kaoto.kompanion.app.trace';
+
+export const COMMAND_KOMPANION_APP_CANVAS = 'kaoto.kompanion.app.canvas';

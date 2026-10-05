@@ -9,6 +9,7 @@ import {
 	NodeLabelType,
 	NodeToolbarTrigger,
 	RuntimeMavenInformation,
+	RuntimeOverlay,
 	SettingsModel,
 	StepUpdateAction,
 	Suggestion,
@@ -25,6 +26,7 @@ import { VsCodeWorkspaceChannelApiImpl } from '@kie-tools-core/vscode-extension/
 import { JavaCodeCompletionApi } from '@kie-tools-core/vscode-java-code-completion/dist/api';
 import { ResourceContentService } from '@kie-tools-core/workspace/dist/api';
 import * as path from 'path'; // NOSONAR
+import { KompanionOverlay } from '../kompanion/KompanionOverlay';
 import * as vscode from 'vscode';
 import {
 	KAOTO_CANVAS_LAYOUT_DIRECTION_SETTING_ID,
@@ -398,5 +400,10 @@ export class VSCodeKaotoEditorChannelApi extends DefaultVsCodeKieEditorChannelAp
 		}
 
 		return ColorScheme.Light;
+	}
+
+	/** The runtime data the Kompanion view shows on the canvas (see KompanionOverlay). */
+	kaoto_runtimeOverlay(): { defaultValue: RuntimeOverlay } {
+		return { defaultValue: KompanionOverlay.current };
 	}
 }

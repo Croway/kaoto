@@ -6,6 +6,7 @@
 export * from './models/catalog-kind';
 export * from './models/file-types';
 export * from './models/runtime-maven-information';
+export * from './models/runtime-overlay';
 export * from './models/settings';
 export * from './models/step-update-action';
 /**

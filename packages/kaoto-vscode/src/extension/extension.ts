@@ -100,7 +100,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		new InfrastructureRegistrar(context, telemetryService),
 		new TestsRegistrar(context, telemetryService),
 		new OpenApiRegistrar(context, telemetryService),
-		new KompanionRegistrar(context),
+		new KompanionRegistrar(context, kieEditorStore),
 		new ExecutorRegistrar(context, telemetryService, catalogService),
 		new LifecycleRegistrar(context, telemetryService),
 	];
