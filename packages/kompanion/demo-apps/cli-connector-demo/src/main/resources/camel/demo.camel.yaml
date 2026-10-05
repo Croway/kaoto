@@ -1,0 +1,42 @@
+# Moves on its own: the route counters change every 2 seconds.
+- route:
+    id: heartbeat
+    from:
+      id: from-heartbeat
+      uri: timer:heartbeat
+      parameters:
+        period: "2000"
+      steps:
+        - setBody:
+            id: beat
+            simple: "beat #${header.CamelTimerCounter}"
+        - log:
+            id: log-beat
+            message: "${body}"
+
+# Driven by hand: send a message to direct:orders (header fail=true makes it fail).
+- route:
+    id: orders
+    from:
+      id: from-orders
+      uri: direct:orders
+      steps:
+        - log:
+            id: log-order
+            message: "orders received: ${body}"
+        - choice:
+            id: check
+            when:
+              - id: when-fail
+                simple: "${header.fail} == 'true'"
+                steps:
+                  - throwException:
+                      id: boom
+                      exceptionType: java.lang.IllegalStateException
+                      message: boom
+            otherwise:
+              id: otherwise
+              steps:
+                - setBody:
+                    id: reply
+                    simple: "reply: ${body}"
