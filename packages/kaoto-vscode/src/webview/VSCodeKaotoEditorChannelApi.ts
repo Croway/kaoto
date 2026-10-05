@@ -406,4 +406,9 @@ export class VSCodeKaotoEditorChannelApi extends DefaultVsCodeKieEditorChannelAp
 	kaoto_runtimeOverlay(): { defaultValue: RuntimeOverlay } {
 		return { defaultValue: KompanionOverlay.current };
 	}
+
+	/** Sends a test message to a route of the app the Kompanion view shows on the canvas. */
+	async kaoto_runtimeSendTestMessage(routeId: string): Promise<void> {
+		await KompanionOverlay.sendTestMessage(routeId);
+	}
 }

@@ -29,6 +29,17 @@ interface SharedOverlay {
 export class KompanionOverlay {
 	private static value: RuntimeOverlay = EMPTY;
 	private static store: VsCodeKieEditorStore | undefined;
+	private static sender: ((routeId: string) => Promise<void>) | undefined;
+
+	/** Registers what sends a test message to a route of the app shown on the canvas. */
+	static onSendTestMessage(sender: (routeId: string) => Promise<void>): void {
+		KompanionOverlay.sender = sender;
+	}
+
+	/** Sends a test message to a route of the app shown on the canvas (asked by an editor). */
+	static sendTestMessage(routeId: string): Promise<void> {
+		return KompanionOverlay.sender ? KompanionOverlay.sender(routeId) : Promise.resolve();
+	}
 
 	static init(store: VsCodeKieEditorStore): void {
 		KompanionOverlay.store = store;

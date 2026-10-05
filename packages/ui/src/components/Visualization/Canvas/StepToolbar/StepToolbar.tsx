@@ -8,6 +8,7 @@ import {
   CodeBranchIcon,
   CompressArrowsAltIcon,
   ExpandArrowsAltIcon,
+  PaperPlaneIcon,
   PowerOffIcon,
   SyncAltIcon,
   TrashIcon,
@@ -16,6 +17,7 @@ import clsx from 'clsx';
 import { FunctionComponent, useContext, useMemo } from 'react';
 
 import { AddStepMode, IDataTestID, IVisualizationNode } from '../../../../models';
+import { RuntimeOverlayContext } from '../../../../providers/runtime-overlay.provider';
 import { SettingsContext } from '../../../../providers/settings.provider';
 import { getMoveIcons } from '../../Custom/ContextMenu/get-move-icons.util';
 import { useDeleteGroup } from '../../Custom/hooks/delete-group.hook';
@@ -27,6 +29,7 @@ import { useInsertStep } from '../../Custom/hooks/insert-step.hook';
 import { useMoveStep } from '../../Custom/hooks/move-step.hook';
 import { useReplaceStep } from '../../Custom/hooks/replace-step.hook';
 import { useGraphLayout } from '../../Custom/hooks/use-graph-layout.hook';
+import { isRouteFrom } from '../../Custom/Node/RuntimeOverlayBadge';
 
 interface IStepToolbar extends IDataTestID {
   vizNode: IVisualizationNode;
@@ -60,10 +63,27 @@ export const StepToolbar: FunctionComponent<IStepToolbar> = ({
 
   // Get the appropriate move icons based on layout and node type
   const icons = useMemo(() => getMoveIcons(layout, vizNode), [layout, vizNode]);
+  // a route of the running app shown on the canvas: a test message can be sent to where it starts
+  const runtime = useContext(RuntimeOverlayContext);
+  const canSendTestMessage =
+    !!runtime.sendTestMessage && isRouteFrom(vizNode) && !!runtime.overlay.routes[vizNode.getId() ?? ''];
 
   return (
     <div className="step-toolbar-wrapper">
       <div className={clsx(className, 'step-toolbar')} data-testid={dataTestId}>
+        {canSendTestMessage && (
+          <Button
+            icon={<PaperPlaneIcon />}
+            className="step-toolbar__button"
+            data-testid={`${label}|step-toolbar-button-send-test-message`}
+            variant="control"
+            title="Send a test message to the running route"
+            onClick={async (event) => {
+              event.stopPropagation();
+              await runtime.sendTestMessage?.(vizNode.getId() ?? '');
+            }}
+          />
+        )}
         {canDuplicate && (
           <Button
             icon={<BlueprintIcon />}

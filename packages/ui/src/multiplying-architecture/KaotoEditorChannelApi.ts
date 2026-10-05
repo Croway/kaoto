@@ -112,4 +112,7 @@ export interface KaotoEditorChannelApi extends KogitoEditorChannelApi {
    * editor is open.
    */
   kaoto_runtimeOverlay(): SharedValueProvider<RuntimeOverlay>;
+
+  /** Sends a test message to a route of the running app shown with kaoto_runtimeOverlay. */
+  kaoto_runtimeSendTestMessage(routeId: string): Promise<void>;
 }

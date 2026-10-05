@@ -175,6 +175,10 @@ export class KaotoEditorApp implements Editor {
     setColorScheme(this.settingsAdapter.getSettings().colorScheme);
   }
 
+  private readonly sendTestMessage = (routeId: string): Promise<void> => {
+    return this.envelopeContext.channelApi.requests.kaoto_runtimeSendTestMessage(routeId);
+  };
+
   af_componentRoot() {
     return (
       <ReloadProvider>
@@ -189,7 +193,10 @@ export class KaotoEditorApp implements Editor {
                 >
                   <CatalogLoaderProvider getResourcesContentByType={this.getResourcesContentByType}>
                     <EntitiesProvider>
-                      <RuntimeOverlayProvider consumer={this.envelopeContext.channelApi.shared.kaoto_runtimeOverlay}>
+                      <RuntimeOverlayProvider
+                        consumer={this.envelopeContext.channelApi.shared.kaoto_runtimeOverlay}
+                        sendTestMessage={this.sendTestMessage}
+                      >
                         <KaotoBridge
                           channelType={this.initArgs.channel}
                           onReady={this.sendReady}

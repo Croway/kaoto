@@ -66,6 +66,7 @@ export class KompanionRegistrar implements IRegistrar {
 		kieEditorStore: VsCodeKieEditorStore,
 	) {
 		KompanionOverlay.init(kieEditorStore);
+		KompanionOverlay.onSendTestMessage((routeId) => this.sendToRoute(routeId));
 	}
 
 	register(): void {
@@ -241,6 +242,39 @@ export class KompanionRegistrar implements IRegistrar {
 					this.traceOutput.appendLine(`trace stream failed: ${error}`);
 				}
 			});
+	}
+
+	/**
+	 * Sends a test message to a route of the app shown on the canvas, from the canvas. The connector sends it to the
+	 * endpoint the route starts from (the route id resolves to it), with a producer: fine for direct or seda, a real
+	 * message for kafka, jms or file, and refused by the components without a producer (timer, scheduler, cron, ...).
+	 */
+	private async sendToRoute(routeId: string): Promise<void> {
+		const executionId = this.onCanvas;
+		if (!executionId || !this.client) {
+			vscode.window.showWarningMessage('No running app is shown on the canvas (Show on Canvas in the Kompanion view)');
+			return;
+		}
+		const body = await vscode.window.showInputBox({
+			prompt: `Body of the test message to the route ${routeId} of ${executionId}`,
+			value: 'hello from Kaoto',
+		});
+		if (body === undefined) {
+			return;
+		}
+		let result: KompanionCommandResult;
+		try {
+			result = await this.client.command(executionId, { type: 'camel.cmd.exchange.inject', endpoint: routeId, body });
+		} catch (error) {
+			vscode.window.showErrorMessage(`Cannot send to ${routeId}: ${error}`);
+			return;
+		}
+		this.output.appendLine(`[${executionId}] send to route ${routeId}: ${result.status}${result.detail ? ` (${result.detail})` : ''}`);
+		if (result.status === 'acked') {
+			vscode.window.showInformationMessage(`Sent to ${routeId} (${result.detail ?? 'ok'})`);
+		} else {
+			vscode.window.showErrorMessage(`Sending to ${routeId} failed: ${result.detail ?? result.status}`);
+		}
 	}
 
 	/** Shows the runtime data of an app on the canvas of the open Kaoto editors, or stops showing it. */

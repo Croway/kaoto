@@ -7,8 +7,14 @@ import { RuntimeOverlayContext } from '../../../../providers/runtime-overlay.pro
  * The runtime counters of a step, from the runtime data the host pushes: the route state and counters on the first step
  * of a route, the step counters elsewhere. Nothing when there is no data for the step.
  */
+/** Whether the node is the endpoint a route starts from. */
+export const isRouteFrom = (vizNode: IVisualizationNode): boolean => {
+  const path = vizNode.data.path ?? '';
+  return path === 'from' || path.endsWith('.from');
+};
+
 export const RuntimeOverlayBadge: FunctionComponent<{ vizNode: IVisualizationNode }> = ({ vizNode }) => {
-  const overlay = useContext(RuntimeOverlayContext);
+  const { overlay } = useContext(RuntimeOverlayContext);
   if (Object.keys(overlay.routes).length === 0) {
     // nothing shown: the usual case
     return null;
@@ -17,8 +23,7 @@ export const RuntimeOverlayBadge: FunctionComponent<{ vizNode: IVisualizationNod
   if (!route) {
     return null;
   }
-  const path = vizNode.data.path ?? '';
-  const isFrom = path === 'from' || path.endsWith('.from');
+  const isFrom = isRouteFrom(vizNode);
   const stepId = (vizNode.data.definition as { id?: string } | undefined)?.id;
   const statistics = isFrom ? route : stepId ? route.steps[stepId] : undefined;
   if (!statistics) {
