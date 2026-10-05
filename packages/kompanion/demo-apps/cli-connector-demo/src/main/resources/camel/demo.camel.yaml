@@ -1,42 +1,69 @@
-# Moves on its own: the route counters change every 2 seconds.
 - route:
     id: heartbeat
+    description: "Heartbeat: a timer fires every 2 seconds, so the counters move on their own"
     from:
       id: from-heartbeat
+      description: Fire every 2 seconds
       uri: timer:heartbeat
       parameters:
         period: "2000"
       steps:
         - setBody:
             id: beat
+            description: "Set the body to 'beat #<counter>'"
             simple: "beat #${header.CamelTimerCounter}"
         - log:
             id: log-beat
+            description: Log the beat
             message: "${body}"
 
-# Driven by hand: send a message to direct:orders (header fail=true makes it fail).
 - route:
     id: orders
+    description: "Orders: send a test message to direct:orders (header fail=true makes it fail); accepted orders go to the Kafka topic shipping"
     from:
       id: from-orders
+      description: Receive an order (send a test message here)
       uri: direct:orders
       steps:
         - log:
             id: log-order
+            description: Log the received order
             message: "orders received: ${body}"
         - choice:
             id: check
+            description: Should the order fail?
             when:
               - id: when-fail
+                description: "Yes: the header fail is 'true'"
                 simple: "${header.fail} == 'true'"
                 steps:
                   - throwException:
                       id: boom
+                      description: Fail the order with an exception (boom)
                       exceptionType: java.lang.IllegalStateException
                       message: boom
             otherwise:
               id: otherwise
+              description: "No: accept the order"
               steps:
                 - setBody:
                     id: reply
-                    simple: "reply: ${body}"
+                    description: "Set the body to 'accepted: <order>'"
+                    simple: "accepted: ${body}"
+                - to:
+                    id: to-shipping
+                    description: Send the accepted order to the Kafka topic shipping
+                    uri: kafka:shipping
+
+- route:
+    id: shipping
+    description: "Shipping: consumes the Kafka topic shipping (a test message sent here is published to the topic for real)"
+    from:
+      id: from-shipping
+      description: Receive the orders to ship from the Kafka topic shipping
+      uri: kafka:shipping
+      steps:
+        - log:
+            id: log-shipping
+            description: Log the order to ship
+            message: "shipping: ${body}"

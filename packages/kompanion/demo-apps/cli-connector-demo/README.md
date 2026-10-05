@@ -1,7 +1,22 @@
 # cli-connector-demo
 
-A Camel Main app with `camel-cli-connector`, to try the Kompanion by hand: two routes, `heartbeat`
-(a timer, every 2 seconds) and `orders` (`direct:orders`; the header `fail=true` makes it fail).
+A Camel Main app with `camel-cli-connector`, to try the Kompanion by hand. Every step has an id and
+a description, so the route reads on the canvas:
+
+- `heartbeat`: a timer, every 2 seconds;
+- `orders`: `direct:orders` (the header `fail=true` makes it fail); accepted orders go to the Kafka
+  topic `shipping`;
+- `shipping`: consumes the Kafka topic `shipping`.
+
+The Kafka routes need a broker on `localhost:9092` (`camel.component.kafka.brokers` in
+`application.properties`):
+
+```bash
+camel infra run kafka
+```
+
+Without it the app starts anyway: the `shipping` consumer retries until the broker is there, and
+accepted orders fail after 5 seconds.
 
 ```bash
 ./build.sh                    # builds it on Camel 4.18.4, 4.22.1 and 4.23.0-SNAPSHOT
