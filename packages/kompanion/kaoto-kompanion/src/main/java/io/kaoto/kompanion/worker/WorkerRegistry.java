@@ -1,5 +1,6 @@
 package io.kaoto.kompanion.worker;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.kaoto.kompanion.model.CommandResult;
 import io.kaoto.kompanion.model.ExecutionInfo;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -20,7 +21,12 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @ApplicationScoped
 public class WorkerRegistry {
 
-    public record AckResult(boolean success, String detail) {}
+    /** The answer of a worker to a command; {@code result} is what a camel-cli-connector action returned, or null. */
+    public record AckResult(boolean success, String detail, JsonNode result) {
+        public AckResult(boolean success, String detail) {
+            this(success, detail, null);
+        }
+    }
 
     /** Snapshot of the channel state at the moment a command is submitted. */
     public record ChannelSnapshot(String connectionId, CompletableFuture<WorkerProtocol> protocol) {}
@@ -272,15 +278,22 @@ public class WorkerRegistry {
 
     /** Called by WorkerWebSocketHandler when a camel.cmd.ack frame arrives. */
     public void receiveAck(String executionId, String correlationId, boolean success, String detail) {
+        receiveAck(executionId, correlationId, success, detail, null);
+    }
+
+    /** Records the answer of a worker to a command, with what the action returned (null when nothing). */
+    public void receiveAck(String executionId, String correlationId, boolean success, String detail, JsonNode result) {
         Map<String, PendingEntry> entries = executions.get(executionId);
         if (entries != null) {
             entries.computeIfPresent(correlationId, (k, existing) -> {
                 if (!existing.future().isDone()) {
-                    existing.future().complete(new AckResult(success, detail));
+                    existing.future().complete(new AckResult(success, detail, result));
                 }
                 // Replace with final result (future is done; keep entry for polling)
                 return new PendingEntry(
-                        existing.future(), CommandResult.acked(correlationId, success, detail), clock.instant());
+                        existing.future(),
+                        CommandResult.acked(correlationId, success, detail, result),
+                        clock.instant());
             });
         }
     }

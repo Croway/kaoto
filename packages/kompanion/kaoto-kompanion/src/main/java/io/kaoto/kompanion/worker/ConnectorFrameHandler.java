@@ -56,7 +56,9 @@ public class ConnectorFrameHandler {
                             executionId,
                             requestId,
                             ok,
-                            ok ? ConnectorProtocolCodec.summary(node) : ConnectorProtocolCodec.error(node));
+                            ok ? ConnectorProtocolCodec.summary(node) : ConnectorProtocolCodec.error(node),
+                            // what the action returned (e.g. the exchangeId and reply of a send), for the client
+                            node.path("result").isObject() ? node.path("result").deepCopy() : null);
                 }
             }
             case "snapshot" -> {

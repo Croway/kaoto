@@ -115,7 +115,7 @@ public class CommandResource {
                 // a breakpoint added by a client belongs to its subscription
                 demand.actionDone(executionId, subscriptionId, c.action(), ack.success());
             }
-            return Response.ok(CommandResult.acked(correlationId, ack.success(), ack.detail()))
+            return Response.ok(CommandResult.acked(correlationId, ack.success(), ack.detail(), ack.result()))
                     .build();
         } catch (Exception e) {
             Throwable cause = e.getCause();

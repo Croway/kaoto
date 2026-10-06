@@ -322,4 +322,33 @@ class CommandResourceTest {
 
         registry.unregister(executionId, "test-conn-forget");
     }
+
+    @Test
+    void resultOfAConnectorActionIsReturned() {
+        String executionId = "cmd-test-connector-result";
+        registry.register(executionId, "test-conn-result", frame -> {
+            try {
+                var node = new com.fasterxml.jackson.databind.ObjectMapper().readTree(frame);
+                var result = new com.fasterxml.jackson.databind.ObjectMapper()
+                        .readTree("{\"status\":\"success\",\"exchangeId\":\"ID-1\",\"message\":{\"body\":\"reply\"}}");
+                new Thread(() -> registry.receiveAck(
+                                executionId, node.path("requestId").asText(), true, "success", result))
+                        .start();
+            } catch (Exception ignored) {
+            }
+        });
+        registry.protocolDetected(executionId, "test-conn-result", WorkerProtocol.CONNECTOR);
+
+        given().contentType("application/json")
+                .body("{\"type\":\"camel.cmd.exchange.inject\",\"endpoint\":\"direct:a\",\"body\":\"x\"}")
+                .when()
+                .post("/v1/executions/" + executionId + "/commands")
+                .then()
+                .statusCode(200)
+                .body("status", is("acked"))
+                .body("result.exchangeId", is("ID-1"))
+                .body("result.message.body", is("reply"));
+
+        registry.unregister(executionId, "test-conn-result");
+    }
 }
