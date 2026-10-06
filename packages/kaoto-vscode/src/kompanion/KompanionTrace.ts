@@ -124,7 +124,16 @@ export class KompanionTrace {
 			if (followed && (followed.exchangeIds.has(t.exchangeId) || message.headers?.[TRACE_HEADER] === followed.traceId)) {
 				// the same exchange, or another one carrying the header (e.g. after a Kafka hop)
 				followed.exchangeIds.add(t.exchangeId);
-				followed.steps.set(`${routeId}|${nodeId}`, { routeId, nodeId, uid: Number(t.uid ?? 0), failed: !!t.failed });
+				// a step is traced again when the exchange leaves it (the from of a route): its place is where it came first
+				const key = `${routeId}|${nodeId}`;
+				const known = followed.steps.get(key);
+				const uid = Number(t.uid ?? 0);
+				followed.steps.set(key, {
+					routeId,
+					nodeId,
+					uid: known ? Math.min(known.uid, uid) : uid,
+					failed: !!known?.failed || !!t.failed,
+				});
 			}
 		}
 		this.onChange();

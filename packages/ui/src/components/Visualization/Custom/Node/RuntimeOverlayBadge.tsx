@@ -93,7 +93,14 @@ export const RuntimeOverlayBadge: FunctionComponent<{ vizNode: IVisualizationNod
           />
           <span
             title={`Step ${onPath.order} of ${overlay.path?.label ?? 'the latest message'}`}
-            style={{ ...pill, top: -10, left: -12, background: onPath.failed ? FAILED_COLOR : PATH_COLOR }}
+            // on the left side: the top is taken by the counters
+            style={{
+              ...pill,
+              top: '50%',
+              left: -14,
+              transform: 'translate(-100%, -50%)',
+              background: onPath.failed ? FAILED_COLOR : PATH_COLOR,
+            }}
           >
             {onPath.order}
           </span>
