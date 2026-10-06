@@ -39,4 +39,46 @@ describe('SendTestMessageModal', () => {
     fireEvent.click(screen.getByText('Format JSON'));
     expect(screen.getByText(/Not valid JSON/)).toBeInTheDocument();
   });
+
+  it('sends to an endpoint with the chosen pattern, and shows the reply without closing', async () => {
+    const onSend = vi.fn().mockResolvedValue({
+      status: 'acked',
+      detail: 'ok in 12 ms',
+      exchangeId: 'ex-1',
+      bodyType: 'java.lang.String',
+      body: 'shipped',
+      headers: { carrier: 'acme' },
+    });
+    const onClose = vi.fn();
+    render(<SendTestMessageModal routeId="orders" endpoint="kafka:shipping" onSend={onSend} onClose={onClose} />);
+    expect(screen.getByText('kafka:shipping')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByTestId('test-message-body'), { target: { value: 'order 1' } });
+    fireEvent.click(screen.getByLabelText('InOut (wait for the reply)'));
+    fireEvent.click(screen.getByTestId('test-message-send'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('test-message-outcome')).toBeInTheDocument();
+    });
+    expect(onSend).toHaveBeenCalledWith({
+      body: 'order 1',
+      headers: {},
+      endpoint: 'kafka:shipping',
+      exchangePattern: 'InOut',
+    });
+    expect(onClose).not.toHaveBeenCalled();
+    expect(screen.getByText('ex-1')).toBeInTheDocument();
+    expect(screen.getByText('shipped')).toBeInTheDocument();
+    expect(screen.getByText('carrier: acme')).toBeInTheDocument();
+  });
+
+  it('shows why sending to an endpoint failed', async () => {
+    const onSend = vi.fn().mockResolvedValue({ status: 'failed', detail: 'Topic shipping not present' });
+    render(<SendTestMessageModal routeId="orders" endpoint="kafka:other" onSend={onSend} onClose={vi.fn()} />);
+
+    fireEvent.click(screen.getByTestId('test-message-send'));
+
+    expect(await screen.findByText('Sending failed')).toBeInTheDocument();
+    expect(screen.getByText('Topic shipping not present')).toBeInTheDocument();
+  });
 });

@@ -15,7 +15,7 @@
  */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import type { RuntimeTestMessage } from '@kaoto/kaoto/models';
+import type { RuntimeTestMessage, RuntimeTestReply } from '@kaoto/kaoto/models';
 import * as vscode from 'vscode';
 import {
 	COMMAND_KOMPANION_APP_CANVAS,
@@ -39,7 +39,7 @@ import { KompanionClient, KompanionCommandResult } from '../../kompanion/Kompani
 import { KompanionProcess } from '../../kompanion/KompanionProcess';
 import { KompanionExecutionItem, KompanionProvider, KompanionRouteItem } from '../../kompanion/KompanionProvider';
 import { KompanionOverlay } from '../../kompanion/KompanionOverlay';
-import { KompanionTrace, TRACE_HEADER } from '../../kompanion/KompanionTrace';
+import { KompanionTrace, summarize, TRACE_HEADER } from '../../kompanion/KompanionTrace';
 import { IRegistrar } from './IRegistrar';
 import type { VsCodeKieEditorStore } from '@kie-tools-core/vscode-extension/dist/VsCodeKieEditorStore';
 
@@ -264,11 +264,14 @@ export class KompanionRegistrar implements IRegistrar {
 	 * endpoint the route starts from (the route id resolves to it), with a producer: fine for direct or seda, a real
 	 * message for kafka, jms or file, and refused by the components without a producer (timer, scheduler, cron, ...).
 	 */
-	private async sendToRoute(routeId: string, message?: RuntimeTestMessage): Promise<void> {
+	private async sendToRoute(routeId: string, message?: RuntimeTestMessage): Promise<RuntimeTestReply | void> {
 		const executionId = this.onCanvas;
 		if (!executionId || !this.client) {
 			vscode.window.showWarningMessage('No running app is shown on the canvas (Show on Canvas in the Kompanion view)');
 			return;
+		}
+		if (message?.endpoint) {
+			return this.sendToEndpoint(executionId, routeId, message);
 		}
 		// written in the editor, or asked here
 		const body =
@@ -307,6 +310,47 @@ export class KompanionRegistrar implements IRegistrar {
 		} else {
 			vscode.window.showErrorMessage(`Sending to ${routeId} failed: ${result.detail ?? result.status}`);
 		}
+	}
+
+	/**
+	 * Sends a test message to an endpoint of a route (e.g. the one of a `to` step), with the send action of the connector,
+	 * as the route would: with the configuration of the app. The outcome, and the reply with InOut, go back to the editor.
+	 */
+	private async sendToEndpoint(executionId: string, routeId: string, message: RuntimeTestMessage): Promise<RuntimeTestReply> {
+		const endpoint = message.endpoint as string;
+		const traceId = this.canvasTrace?.follow(`${routeId} → ${endpoint}`);
+		const headers = { ...message.headers, ...(traceId ? { [TRACE_HEADER]: traceId } : {}) };
+		let result: KompanionCommandResult;
+		try {
+			result = await this.client!.command(executionId, {
+				type: 'camel.cmd.connector.action',
+				action: {
+					action: 'send',
+					endpoint,
+					body: message.body,
+					exchangePattern: message.exchangePattern ?? 'InOnly',
+					headers: Object.entries(headers).map(([key, value]) => ({ key, value })),
+				},
+			});
+		} catch (error) {
+			return { status: 'failed', detail: `Cannot send to ${endpoint}: ${error}` };
+		}
+		const sent = result.result ?? {};
+		this.canvasTrace?.addExchange(sent.exchangeId);
+		this.output.appendLine(
+			`[${executionId}] send to ${endpoint} (${message.exchangePattern ?? 'InOnly'}): ${result.status}${result.detail ? ` (${result.detail})` : ''}`,
+		);
+		// the action runs even when the endpoint fails: the failure is in its result
+		const reply = summarize(sent);
+		const failed = result.status === 'failed' || reply.failed || !!sent.exception;
+		return {
+			status: failed ? 'failed' : result.status,
+			detail: failed
+				? (reply.exception ?? result.detail ?? 'failed')
+				: `${result.detail ?? 'ok'}${sent.elapsed !== undefined ? ` in ${sent.elapsed} ms` : ''}`,
+			exchangeId: sent.exchangeId,
+			...(sent.message ? { bodyType: reply.bodyType, body: reply.body, headers: reply.headers } : {}),
+		};
 	}
 
 	/**

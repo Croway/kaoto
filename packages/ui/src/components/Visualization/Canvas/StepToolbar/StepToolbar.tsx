@@ -30,6 +30,7 @@ import { useMoveStep } from '../../Custom/hooks/move-step.hook';
 import { useReplaceStep } from '../../Custom/hooks/replace-step.hook';
 import { useGraphLayout } from '../../Custom/hooks/use-graph-layout.hook';
 import { isRouteFrom } from '../../Custom/Node/RuntimeOverlayBadge';
+import { isSendableEndpoint, resolveEndpointUri } from './endpoint-uri';
 
 interface IStepToolbar extends IDataTestID {
   vizNode: IVisualizationNode;
@@ -65,8 +66,10 @@ export const StepToolbar: FunctionComponent<IStepToolbar> = ({
   const icons = useMemo(() => getMoveIcons(layout, vizNode), [layout, vizNode]);
   // a route of the running app shown on the canvas: a test message can be sent to where it starts
   const runtime = useContext(RuntimeOverlayContext);
-  const canSendTestMessage =
-    !!runtime.openSendTestMessage && isRouteFrom(vizNode) && !!runtime.overlay.routes[vizNode.getId() ?? ''];
+  const runtimeRoute = !!runtime.openSendTestMessage && !!runtime.overlay.routes[vizNode.getId() ?? ''];
+  const canSendTestMessage = runtimeRoute && isRouteFrom(vizNode);
+  // or to the endpoint of a `to` step, as the route would
+  const canSendToEndpoint = runtimeRoute && isSendableEndpoint(vizNode);
 
   return (
     <div className="step-toolbar-wrapper">
@@ -81,6 +84,22 @@ export const StepToolbar: FunctionComponent<IStepToolbar> = ({
             onClick={(event) => {
               event.stopPropagation();
               runtime.openSendTestMessage?.(vizNode.getId() ?? '');
+            }}
+          />
+        )}
+        {canSendToEndpoint && (
+          <Button
+            icon={<PaperPlaneIcon />}
+            className="step-toolbar__button"
+            data-testid={`${label}|step-toolbar-button-send-to-endpoint`}
+            variant="control"
+            title="Send to this endpoint"
+            onClick={async (event) => {
+              event.stopPropagation();
+              const endpoint = await resolveEndpointUri(vizNode);
+              if (endpoint) {
+                runtime.openSendTestMessage?.(vizNode.getId() ?? '', endpoint);
+              }
             }}
           />
         )}

@@ -2,7 +2,7 @@ import { SharedValueConsumer } from '@kie-tools-core/envelope-bus/dist/api';
 import { createContext, FunctionComponent, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { SendTestMessageModal } from '../components/Visualization/Canvas/StepToolbar/SendTestMessageModal';
-import { RuntimeOverlay, RuntimeTestMessage } from '../models/runtime-overlay';
+import { RuntimeOverlay, RuntimeTestMessage, RuntimeTestReply } from '../models/runtime-overlay';
 
 const EMPTY: RuntimeOverlay = { routes: {} };
 
@@ -10,9 +10,12 @@ export interface RuntimeOverlayContextValue {
   /** The runtime data of a running app to show on the canvas (none by default). */
   overlay: RuntimeOverlay;
   /** Sends a test message to a route of the running app, when the host can. */
-  sendTestMessage?: (routeId: string, message?: RuntimeTestMessage) => Promise<void>;
-  /** Opens the dialog to write a test message to a route (kept here: the node toolbar comes and goes with the mouse). */
-  openSendTestMessage?: (routeId: string) => void;
+  sendTestMessage?: (routeId: string, message?: RuntimeTestMessage) => Promise<RuntimeTestReply | void>;
+  /**
+   * Opens the dialog to write a test message to a route, or to an endpoint of it (kept here: the node toolbar comes and
+   * goes with the mouse).
+   */
+  openSendTestMessage?: (routeId: string, endpoint?: string) => void;
 }
 
 export const RuntimeOverlayContext = createContext<RuntimeOverlayContextValue>({ overlay: EMPTY });
@@ -21,7 +24,7 @@ export const RuntimeOverlayContext = createContext<RuntimeOverlayContextValue>({
 export const RuntimeOverlayProvider: FunctionComponent<
   PropsWithChildren<{
     consumer?: SharedValueConsumer<RuntimeOverlay>;
-    sendTestMessage?: (routeId: string, message?: RuntimeTestMessage) => Promise<void>;
+    sendTestMessage?: (routeId: string, message?: RuntimeTestMessage) => Promise<RuntimeTestReply | void>;
   }>
 > = ({ consumer, sendTestMessage, children }) => {
   const [overlay, setOverlay] = useState<RuntimeOverlay>(EMPTY);
@@ -38,10 +41,10 @@ export const RuntimeOverlayProvider: FunctionComponent<
     };
   }, [consumer]);
 
-  // the route a test message is being written for
-  const [sendingTo, setSendingTo] = useState<string>();
-  const openSendTestMessage = useCallback((routeId: string) => {
-    setSendingTo(routeId);
+  // the route (and endpoint) a test message is being written for
+  const [sendingTo, setSendingTo] = useState<{ routeId: string; endpoint?: string }>();
+  const openSendTestMessage = useCallback((routeId: string, endpoint?: string) => {
+    setSendingTo({ routeId, endpoint });
   }, []);
 
   const value = useMemo(
@@ -53,8 +56,9 @@ export const RuntimeOverlayProvider: FunctionComponent<
       {children}
       {sendingTo && sendTestMessage && (
         <SendTestMessageModal
-          routeId={sendingTo}
-          onSend={(message) => sendTestMessage(sendingTo, message)}
+          routeId={sendingTo.routeId}
+          endpoint={sendingTo.endpoint}
+          onSend={(message) => sendTestMessage(sendingTo.routeId, message)}
           onClose={() => {
             setSendingTo(undefined);
           }}

@@ -140,8 +140,8 @@ export class KompanionTrace {
 	}
 }
 
-/** What the canvas shows of a trace event. */
-function summarize(t: Record<string, any>): RuntimeOverlayMessage {
+/** What the canvas shows of a trace event (or of the result of a send: the same message and exception). */
+export function summarize(t: Record<string, any>): RuntimeOverlayMessage {
 	const message = t.message ?? {};
 	const headers: Record<string, string> = {};
 	for (const h of (message.headers ?? []) as { key?: string; type?: string; value?: unknown }[]) {

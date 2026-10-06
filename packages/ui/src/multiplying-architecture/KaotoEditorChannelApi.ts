@@ -8,7 +8,7 @@ import {
   CamelQuarkusMavenInformation,
   CamelSpringBootMavenInformation,
 } from '../models/runtime-maven-information';
-import { RuntimeOverlay, RuntimeTestMessage } from '../models/runtime-overlay';
+import { RuntimeOverlay, RuntimeTestMessage, RuntimeTestReply } from '../models/runtime-overlay';
 import { ISettingsModel } from '../models/settings';
 
 export interface KaotoEditorChannelApi extends KogitoEditorChannelApi {
@@ -117,5 +117,5 @@ export interface KaotoEditorChannelApi extends KogitoEditorChannelApi {
    * Sends a test message to a route of the running app shown with kaoto_runtimeOverlay; without a message, the host asks
    * for one.
    */
-  kaoto_runtimeSendTestMessage(routeId: string, message?: RuntimeTestMessage): Promise<void>;
+  kaoto_runtimeSendTestMessage(routeId: string, message?: RuntimeTestMessage): Promise<RuntimeTestReply | void>;
 }

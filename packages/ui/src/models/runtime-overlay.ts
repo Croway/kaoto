@@ -52,8 +52,27 @@ export interface RuntimeOverlay {
   path?: RuntimeOverlayPath;
 }
 
-/** A test message to send to a route of the running app. */
+/**
+ * A test message to send to the running app: to the endpoint a route starts from, or, with {@code endpoint}, to that
+ * endpoint (e.g. the one of a `to` step), as the route would.
+ */
 export interface RuntimeTestMessage {
   body: string;
   headers: Record<string, string>;
+  /** an endpoint URI to send to instead of the route */
+  endpoint?: string;
+  /** InOut to get the reply of the endpoint */
+  exchangePattern?: 'InOnly' | 'InOut';
+}
+
+/** What sending a test message gave. */
+export interface RuntimeTestReply {
+  status: 'acked' | 'failed' | 'pending';
+  /** why it failed, or a short outcome */
+  detail?: string;
+  exchangeId?: string;
+  /** the reply, with InOut */
+  bodyType?: string;
+  body?: string;
+  headers?: Record<string, string>;
 }
