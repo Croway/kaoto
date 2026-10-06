@@ -16,15 +16,17 @@ import {
   useDndDrop,
 } from '@patternfly/react-topology';
 import { clsx } from 'clsx';
-import { FunctionComponent, useContext, useMemo, useRef } from 'react';
+import { CSSProperties, FunctionComponent, useContext, useMemo, useRef } from 'react';
 
 import { CatalogModalContext } from '../../../../dynamic-catalog/catalog-modal.provider';
 import { useEntityContext } from '../../../../hooks/useEntityContext/useEntityContext';
 import { AddStepMode, IVisualizationNode } from '../../../../models';
+import { RuntimeOverlayContext } from '../../../../providers/runtime-overlay.provider';
 import { LayoutType } from '../../Canvas';
 import { CanvasDefaults } from '../../Canvas/canvas.defaults';
 import { canDropOnEdge, GROUP_DRAG_TYPE, NODE_DRAG_TYPE } from '../customComponentUtils';
 import { useGraphLayout } from '../hooks/use-graph-layout.hook';
+import { FAILED_COLOR, PATH_COLOR, pathEdgeOf } from '../Node/RuntimeOverlayBadge';
 import { AddStepIcon } from './AddStepIcon';
 
 type DefaultEdgeProps = Parameters<typeof DefaultEdge>[0];
@@ -59,6 +61,7 @@ export const CustomEdge: FunctionComponent<CustomEdgeProps> = observer(({ elemen
   const entitiesContext = useEntityContext();
   const catalogModalContext = useContext(CatalogModalContext)!;
   const layout = useGraphLayout();
+  const { overlay } = useContext(RuntimeOverlayContext);
   const edgeDRef = useRef<string | null>(null);
   const startPointRef = useRef<Point | null>(null);
   const endPointRef = useRef<Point | null>(null);
@@ -117,6 +120,12 @@ export const CustomEdge: FunctionComponent<CustomEdgeProps> = observer(({ elemen
   }
 
   const vizNode: IVisualizationNode | undefined = element.getTarget().getData()?.vizNode;
+  // the latest message sent from the canvas went along this edge
+  const onPath = pathEdgeOf(overlay, element.getSource().getData()?.vizNode, vizNode);
+  // the edge and its arrow are drawn with this variable
+  const pathStyle = onPath
+    ? ({ '--pf-topology__edge--Stroke': onPath.failed ? FAILED_COLOR : PATH_COLOR } as CSSProperties)
+    : undefined;
   const shouldShowPrepend = !vizNode?.data.isPlaceholder && vizNode?.getNodeInteraction().canHavePreviousStep;
 
   const bendPoints = element
@@ -132,7 +141,7 @@ export const CustomEdge: FunctionComponent<CustomEdgeProps> = observer(({ elemen
   }
 
   return (
-    <g className="custom-edge" ref={dndDropRef}>
+    <g className="custom-edge" ref={dndDropRef} style={pathStyle}>
       <path className="custom-edge__background" d={edgeDRef.current} />
       <path
         className={clsx('custom-edge__body', {
@@ -141,6 +150,8 @@ export const CustomEdge: FunctionComponent<CustomEdgeProps> = observer(({ elemen
             dndDropProps.canDrop && dndDropProps.droppable && !dndDropProps.hover,
         })}
         d={edgeDRef.current}
+        style={onPath && { strokeWidth: 3 }}
+        data-on-path={onPath ? 'true' : undefined}
       />
       <ConnectorArrow
         isTarget

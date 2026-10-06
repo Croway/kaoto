@@ -2,7 +2,7 @@ import { Popover } from '@patternfly/react-core';
 import { CSSProperties, FunctionComponent, MouseEvent, useContext } from 'react';
 
 import { IVisualizationNode } from '../../../../models';
-import { RuntimeOverlayMessage } from '../../../../models/runtime-overlay';
+import { RuntimeOverlay, RuntimeOverlayMessage } from '../../../../models/runtime-overlay';
 import { RuntimeOverlayContext } from '../../../../providers/runtime-overlay.provider';
 
 /** Whether the node is the endpoint a route starts from. */
@@ -11,8 +11,34 @@ export const isRouteFrom = (vizNode: IVisualizationNode): boolean => {
   return path === 'from' || path.endsWith('.from');
 };
 
-const PATH_COLOR = '#0066cc';
-const FAILED_COLOR = '#c9190b';
+export const PATH_COLOR = '#0066cc';
+export const FAILED_COLOR = '#c9190b';
+
+/** Where a step is on the path of the latest message sent from the canvas, or undefined when it is not on it. */
+export const pathStepOf = (
+  overlay: RuntimeOverlay,
+  vizNode: IVisualizationNode | undefined,
+): { order: number; failed: boolean } | undefined => {
+  const stepId = (vizNode?.data.definition as { id?: string } | undefined)?.id;
+  return vizNode && stepId ? overlay.path?.steps[vizNode.getId() ?? '']?.[stepId] : undefined;
+};
+
+/**
+ * Whether an edge is on the path of the latest message sent from the canvas: both of its steps are, the target after
+ * the source. Undefined when it is not; otherwise whether the message failed at the target.
+ */
+export const pathEdgeOf = (
+  overlay: RuntimeOverlay,
+  source: IVisualizationNode | undefined,
+  target: IVisualizationNode | undefined,
+): { failed: boolean } | undefined => {
+  if (!overlay.path || !source || !target || source.getId() !== target.getId()) {
+    return undefined;
+  }
+  const from = pathStepOf(overlay, source);
+  const to = pathStepOf(overlay, target);
+  return from && to && to.order > from.order ? { failed: to.failed } : undefined;
+};
 
 const pill: CSSProperties = {
   position: 'absolute',
@@ -48,7 +74,7 @@ export const RuntimeOverlayBadge: FunctionComponent<{ vizNode: IVisualizationNod
   const isFrom = isRouteFrom(vizNode);
   const stepId = (vizNode.data.definition as { id?: string } | undefined)?.id;
   const statistics = isFrom ? route : stepId ? route.steps[stepId] : undefined;
-  const onPath = stepId ? overlay.path?.steps[routeId]?.[stepId] : undefined;
+  const onPath = pathStepOf(overlay, vizNode);
   const message = stepId ? overlay.messages?.[routeId]?.[stepId] : undefined;
 
   return (
