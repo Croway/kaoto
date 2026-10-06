@@ -14,7 +14,7 @@ import {
   TrashIcon,
 } from '@patternfly/react-icons';
 import clsx from 'clsx';
-import { FunctionComponent, useContext, useMemo, useState } from 'react';
+import { FunctionComponent, useContext, useMemo } from 'react';
 
 import { AddStepMode, IDataTestID, IVisualizationNode } from '../../../../models';
 import { RuntimeOverlayContext } from '../../../../providers/runtime-overlay.provider';
@@ -30,7 +30,6 @@ import { useMoveStep } from '../../Custom/hooks/move-step.hook';
 import { useReplaceStep } from '../../Custom/hooks/replace-step.hook';
 import { useGraphLayout } from '../../Custom/hooks/use-graph-layout.hook';
 import { isRouteFrom } from '../../Custom/Node/RuntimeOverlayBadge';
-import { SendTestMessageModal } from './SendTestMessageModal';
 
 interface IStepToolbar extends IDataTestID {
   vizNode: IVisualizationNode;
@@ -66,10 +65,8 @@ export const StepToolbar: FunctionComponent<IStepToolbar> = ({
   const icons = useMemo(() => getMoveIcons(layout, vizNode), [layout, vizNode]);
   // a route of the running app shown on the canvas: a test message can be sent to where it starts
   const runtime = useContext(RuntimeOverlayContext);
-  // the route a test message is being written for
-  const [sendingTo, setSendingTo] = useState<string>();
   const canSendTestMessage =
-    !!runtime.sendTestMessage && isRouteFrom(vizNode) && !!runtime.overlay.routes[vizNode.getId() ?? ''];
+    !!runtime.openSendTestMessage && isRouteFrom(vizNode) && !!runtime.overlay.routes[vizNode.getId() ?? ''];
 
   return (
     <div className="step-toolbar-wrapper">
@@ -83,16 +80,7 @@ export const StepToolbar: FunctionComponent<IStepToolbar> = ({
             title="Send a test message to the running route"
             onClick={(event) => {
               event.stopPropagation();
-              setSendingTo(vizNode.getId() ?? '');
-            }}
-          />
-        )}
-        {sendingTo && runtime.sendTestMessage && (
-          <SendTestMessageModal
-            routeId={sendingTo}
-            onSend={(message) => runtime.sendTestMessage!(sendingTo, message)}
-            onClose={() => {
-              setSendingTo(undefined);
+              runtime.openSendTestMessage?.(vizNode.getId() ?? '');
             }}
           />
         )}

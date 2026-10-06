@@ -1,6 +1,7 @@
 import { SharedValueConsumer } from '@kie-tools-core/envelope-bus/dist/api';
-import { createContext, FunctionComponent, PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import { createContext, FunctionComponent, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 
+import { SendTestMessageModal } from '../components/Visualization/Canvas/StepToolbar/SendTestMessageModal';
 import { RuntimeOverlay, RuntimeTestMessage } from '../models/runtime-overlay';
 
 const EMPTY: RuntimeOverlay = { routes: {} };
@@ -10,6 +11,8 @@ export interface RuntimeOverlayContextValue {
   overlay: RuntimeOverlay;
   /** Sends a test message to a route of the running app, when the host can. */
   sendTestMessage?: (routeId: string, message?: RuntimeTestMessage) => Promise<void>;
+  /** Opens the dialog to write a test message to a route (kept here: the node toolbar comes and goes with the mouse). */
+  openSendTestMessage?: (routeId: string) => void;
 }
 
 export const RuntimeOverlayContext = createContext<RuntimeOverlayContextValue>({ overlay: EMPTY });
@@ -35,6 +38,28 @@ export const RuntimeOverlayProvider: FunctionComponent<
     };
   }, [consumer]);
 
-  const value = useMemo(() => ({ overlay, sendTestMessage }), [overlay, sendTestMessage]);
-  return <RuntimeOverlayContext.Provider value={value}>{children}</RuntimeOverlayContext.Provider>;
+  // the route a test message is being written for
+  const [sendingTo, setSendingTo] = useState<string>();
+  const openSendTestMessage = useCallback((routeId: string) => {
+    setSendingTo(routeId);
+  }, []);
+
+  const value = useMemo(
+    () => ({ overlay, sendTestMessage, openSendTestMessage: sendTestMessage ? openSendTestMessage : undefined }),
+    [overlay, sendTestMessage, openSendTestMessage],
+  );
+  return (
+    <RuntimeOverlayContext.Provider value={value}>
+      {children}
+      {sendingTo && sendTestMessage && (
+        <SendTestMessageModal
+          routeId={sendingTo}
+          onSend={(message) => sendTestMessage(sendingTo, message)}
+          onClose={() => {
+            setSendingTo(undefined);
+          }}
+        />
+      )}
+    </RuntimeOverlayContext.Provider>
+  );
 };
