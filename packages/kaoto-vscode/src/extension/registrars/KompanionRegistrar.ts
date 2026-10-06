@@ -58,6 +58,8 @@ export class KompanionRegistrar implements IRegistrar {
 	// executionId -> the trace being watched
 	private readonly traces = new Map<string, AbortController>();
 	private demoCount = 0;
+	// target (endpoint or route) -> the headers last sent to it, as typed
+	private readonly lastHeaders = new Map<string, string>();
 	// the execution shown on the canvas of the open editors, and its trace
 	private onCanvas: string | undefined;
 	private canvasTrace: KompanionTrace | undefined;
@@ -203,7 +205,15 @@ export class KompanionRegistrar implements IRegistrar {
 		if (body === undefined) {
 			return;
 		}
-		await this.command(item.execution.executionId, { type: 'camel.cmd.exchange.inject', endpoint, body }, `send to ${endpoint}`);
+		const headers = await this.askHeaders(endpoint);
+		if (headers === undefined) {
+			return;
+		}
+		await this.command(
+			item.execution.executionId,
+			{ type: 'camel.cmd.exchange.inject', endpoint, body, ...(Object.keys(headers).length ? { headers } : {}) },
+			`send to ${endpoint}`,
+		);
 	}
 
 	/** Watches the trace of an app, in its own output: the Kompanion keeps the trace on while it is watched. */
@@ -266,6 +276,10 @@ export class KompanionRegistrar implements IRegistrar {
 		if (body === undefined) {
 			return;
 		}
+		const headers = await this.askHeaders(routeId);
+		if (headers === undefined) {
+			return;
+		}
 		// the header follows the message through the routes, also after a hop through a broker
 		const traceId = this.canvasTrace?.follow(`${routeId}: ${body}`);
 		let result: KompanionCommandResult;
@@ -274,7 +288,7 @@ export class KompanionRegistrar implements IRegistrar {
 				type: 'camel.cmd.exchange.inject',
 				endpoint: routeId,
 				body,
-				...(traceId ? { headers: { [TRACE_HEADER]: traceId } } : {}),
+				headers: { ...headers, ...(traceId ? { [TRACE_HEADER]: traceId } : {}) },
 			});
 		} catch (error) {
 			vscode.window.showErrorMessage(`Cannot send to ${routeId}: ${error}`);
@@ -289,6 +303,37 @@ export class KompanionRegistrar implements IRegistrar {
 		} else {
 			vscode.window.showErrorMessage(`Sending to ${routeId} failed: ${result.detail ?? result.status}`);
 		}
+	}
+
+	/**
+	 * Asks for the headers of a test message, as key=value pairs separated by ; (or key: value); empty for none.
+	 * Remembers what was typed per target. Undefined when cancelled.
+	 */
+	private async askHeaders(target: string): Promise<Record<string, string> | undefined> {
+		const typed = await vscode.window.showInputBox({
+			prompt: `Headers of the message to ${target} (optional): key=value pairs separated by ;`,
+			placeHolder: 'fail=true; X-Customer=acme',
+			value: this.lastHeaders.get(target) ?? '',
+			validateInput: (value) => {
+				const bad = value
+					.split(/[;\n]/)
+					.map((pair) => pair.trim())
+					.find((pair) => pair && !/^[^=:\s][^=:]*\s*[=:]/.test(pair));
+				return bad ? `Not a header: "${bad}" (use key=value)` : undefined;
+			},
+		});
+		if (typed === undefined) {
+			return undefined;
+		}
+		this.lastHeaders.set(target, typed);
+		const headers: Record<string, string> = {};
+		for (const pair of typed.split(/[;\n]/)) {
+			const match = /^\s*([^=:]+?)\s*[=:]\s*(.*?)\s*$/.exec(pair);
+			if (match) {
+				headers[match[1]] = match[2];
+			}
+		}
+		return headers;
 	}
 
 	/** Shows the runtime data of an app on the canvas of the open Kaoto editors, or stops showing it. */
