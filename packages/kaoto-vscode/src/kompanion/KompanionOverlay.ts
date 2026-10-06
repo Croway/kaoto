@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type { RuntimeOverlay } from '@kaoto/kaoto/models';
+import type { RuntimeOverlay, RuntimeTestMessage } from '@kaoto/kaoto/models';
 import type { VsCodeKieEditorStore } from '@kie-tools-core/vscode-extension/dist/VsCodeKieEditorStore';
 
 const EMPTY: RuntimeOverlay = { routes: {} };
@@ -29,16 +29,16 @@ interface SharedOverlay {
 export class KompanionOverlay {
 	private static value: RuntimeOverlay = EMPTY;
 	private static store: VsCodeKieEditorStore | undefined;
-	private static sender: ((routeId: string) => Promise<void>) | undefined;
+	private static sender: ((routeId: string, message?: RuntimeTestMessage) => Promise<void>) | undefined;
 
 	/** Registers what sends a test message to a route of the app shown on the canvas. */
-	static onSendTestMessage(sender: (routeId: string) => Promise<void>): void {
+	static onSendTestMessage(sender: (routeId: string, message?: RuntimeTestMessage) => Promise<void>): void {
 		KompanionOverlay.sender = sender;
 	}
 
 	/** Sends a test message to a route of the app shown on the canvas (asked by an editor). */
-	static sendTestMessage(routeId: string): Promise<void> {
-		return KompanionOverlay.sender ? KompanionOverlay.sender(routeId) : Promise.resolve();
+	static sendTestMessage(routeId: string, message?: RuntimeTestMessage): Promise<void> {
+		return KompanionOverlay.sender ? KompanionOverlay.sender(routeId, message) : Promise.resolve();
 	}
 
 	static init(store: VsCodeKieEditorStore): void {

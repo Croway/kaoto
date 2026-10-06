@@ -15,6 +15,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import { CatalogLoaderProvider } from '../dynamic-catalog/catalog.provider';
 import { CatalogKind, FileTypes, FileTypesResponse, StepUpdateAction } from '../models';
+import { RuntimeTestMessage } from '../models/runtime-overlay';
 import { AbstractSettingsAdapter, SettingsModel } from '../models/settings';
 import { KaotoResourceProvider } from '../providers';
 import { EntitiesProvider } from '../providers/entities.provider';
@@ -175,8 +176,8 @@ export class KaotoEditorApp implements Editor {
     setColorScheme(this.settingsAdapter.getSettings().colorScheme);
   }
 
-  private readonly sendTestMessage = (routeId: string): Promise<void> => {
-    return this.envelopeContext.channelApi.requests.kaoto_runtimeSendTestMessage(routeId);
+  private readonly sendTestMessage = (routeId: string, message?: RuntimeTestMessage): Promise<void> => {
+    return this.envelopeContext.channelApi.requests.kaoto_runtimeSendTestMessage(routeId, message);
   };
 
   af_componentRoot() {

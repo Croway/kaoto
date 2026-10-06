@@ -51,3 +51,9 @@ export interface RuntimeOverlay {
   /** the path of the latest message sent from the canvas */
   path?: RuntimeOverlayPath;
 }
+
+/** A test message to send to a route of the running app. */
+export interface RuntimeTestMessage {
+  body: string;
+  headers: Record<string, string>;
+}

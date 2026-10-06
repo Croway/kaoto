@@ -15,6 +15,7 @@
  */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import type { RuntimeTestMessage } from '@kaoto/kaoto/models';
 import * as vscode from 'vscode';
 import {
 	COMMAND_KOMPANION_APP_CANVAS,
@@ -70,7 +71,7 @@ export class KompanionRegistrar implements IRegistrar {
 		kieEditorStore: VsCodeKieEditorStore,
 	) {
 		KompanionOverlay.init(kieEditorStore);
-		KompanionOverlay.onSendTestMessage((routeId) => this.sendToRoute(routeId));
+		KompanionOverlay.onSendTestMessage((routeId, message) => this.sendToRoute(routeId, message));
 	}
 
 	register(): void {
@@ -263,25 +264,28 @@ export class KompanionRegistrar implements IRegistrar {
 	 * endpoint the route starts from (the route id resolves to it), with a producer: fine for direct or seda, a real
 	 * message for kafka, jms or file, and refused by the components without a producer (timer, scheduler, cron, ...).
 	 */
-	private async sendToRoute(routeId: string): Promise<void> {
+	private async sendToRoute(routeId: string, message?: RuntimeTestMessage): Promise<void> {
 		const executionId = this.onCanvas;
 		if (!executionId || !this.client) {
 			vscode.window.showWarningMessage('No running app is shown on the canvas (Show on Canvas in the Kompanion view)');
 			return;
 		}
-		const body = await vscode.window.showInputBox({
-			prompt: `Body of the test message to the route ${routeId} of ${executionId}`,
-			value: 'hello from Kaoto',
-		});
+		// written in the editor, or asked here
+		const body =
+			message?.body ??
+			(await vscode.window.showInputBox({
+				prompt: `Body of the test message to the route ${routeId} of ${executionId}`,
+				value: 'hello from Kaoto',
+			}));
 		if (body === undefined) {
 			return;
 		}
-		const headers = await this.askHeaders(routeId);
+		const headers = message?.headers ?? (await this.askHeaders(routeId));
 		if (headers === undefined) {
 			return;
 		}
 		// the header follows the message through the routes, also after a hop through a broker
-		const traceId = this.canvasTrace?.follow(`${routeId}: ${body}`);
+		const traceId = this.canvasTrace?.follow(`${routeId}: ${body.length > 60 ? `${body.slice(0, 60)}…` : body}`);
 		let result: KompanionCommandResult;
 		try {
 			result = await this.client.command(executionId, {

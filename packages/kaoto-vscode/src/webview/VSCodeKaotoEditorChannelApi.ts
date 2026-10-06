@@ -10,6 +10,7 @@ import {
 	NodeToolbarTrigger,
 	RuntimeMavenInformation,
 	RuntimeOverlay,
+	RuntimeTestMessage,
 	SettingsModel,
 	StepUpdateAction,
 	Suggestion,
@@ -408,7 +409,7 @@ export class VSCodeKaotoEditorChannelApi extends DefaultVsCodeKieEditorChannelAp
 	}
 
 	/** Sends a test message to a route of the app the Kompanion view shows on the canvas. */
-	async kaoto_runtimeSendTestMessage(routeId: string): Promise<void> {
-		await KompanionOverlay.sendTestMessage(routeId);
+	async kaoto_runtimeSendTestMessage(routeId: string, message?: RuntimeTestMessage): Promise<void> {
+		await KompanionOverlay.sendTestMessage(routeId, message);
 	}
 }
