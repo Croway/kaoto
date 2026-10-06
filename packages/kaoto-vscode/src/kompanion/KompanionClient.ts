@@ -28,6 +28,8 @@ export interface KompanionCommandResult {
 	status: 'acked' | 'failed' | 'pending';
 	success: boolean;
 	detail: string | null;
+	/** what a camel-cli-connector action answered, e.g. the exchangeId and reply of a send */
+	result?: Record<string, any> | null;
 }
 
 /** A frame of the event stream of an execution. */

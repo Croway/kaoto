@@ -38,6 +38,7 @@ import { KompanionClient, KompanionCommandResult } from '../../kompanion/Kompani
 import { KompanionProcess } from '../../kompanion/KompanionProcess';
 import { KompanionExecutionItem, KompanionProvider, KompanionRouteItem } from '../../kompanion/KompanionProvider';
 import { KompanionOverlay } from '../../kompanion/KompanionOverlay';
+import { KompanionTrace, TRACE_HEADER } from '../../kompanion/KompanionTrace';
 import { IRegistrar } from './IRegistrar';
 import type { VsCodeKieEditorStore } from '@kie-tools-core/vscode-extension/dist/VsCodeKieEditorStore';
 
@@ -57,8 +58,9 @@ export class KompanionRegistrar implements IRegistrar {
 	// executionId -> the trace being watched
 	private readonly traces = new Map<string, AbortController>();
 	private demoCount = 0;
-	// the execution shown on the canvas of the open editors
+	// the execution shown on the canvas of the open editors, and its trace
 	private onCanvas: string | undefined;
+	private canvasTrace: KompanionTrace | undefined;
 	private overlayPending: ReturnType<typeof setTimeout> | undefined;
 
 	constructor(
@@ -133,6 +135,8 @@ export class KompanionRegistrar implements IRegistrar {
 
 	private onKompanionExit(): void {
 		this.onCanvas = undefined;
+		this.canvasTrace?.stop();
+		this.canvasTrace = undefined;
 		KompanionOverlay.set(undefined);
 		this.traces.forEach((t) => t.abort());
 		this.traces.clear();
@@ -262,14 +266,24 @@ export class KompanionRegistrar implements IRegistrar {
 		if (body === undefined) {
 			return;
 		}
+		// the header follows the message through the routes, also after a hop through a broker
+		const traceId = this.canvasTrace?.follow(`${routeId}: ${body}`);
 		let result: KompanionCommandResult;
 		try {
-			result = await this.client.command(executionId, { type: 'camel.cmd.exchange.inject', endpoint: routeId, body });
+			result = await this.client.command(executionId, {
+				type: 'camel.cmd.exchange.inject',
+				endpoint: routeId,
+				body,
+				...(traceId ? { headers: { [TRACE_HEADER]: traceId } } : {}),
+			});
 		} catch (error) {
 			vscode.window.showErrorMessage(`Cannot send to ${routeId}: ${error}`);
 			return;
 		}
-		this.output.appendLine(`[${executionId}] send to route ${routeId}: ${result.status}${result.detail ? ` (${result.detail})` : ''}`);
+		this.canvasTrace?.addExchange(result.result?.exchangeId);
+		this.output.appendLine(
+			`[${executionId}] send to route ${routeId}: ${result.status}${result.detail ? ` (${result.detail})` : ''}${result.result?.exchangeId ? ` exchange ${result.result.exchangeId}` : ''}`,
+		);
 		if (result.status === 'acked') {
 			vscode.window.showInformationMessage(`Sent to ${routeId} (${result.detail ?? 'ok'})`);
 		} else {
@@ -282,6 +296,18 @@ export class KompanionRegistrar implements IRegistrar {
 		const executionId = item.execution.executionId;
 		this.onCanvas = this.onCanvas === executionId ? undefined : executionId;
 		this.output.appendLine(this.onCanvas ? `[kaoto] showing ${executionId} on the canvas` : '[kaoto] nothing shown on the canvas');
+		// the canvas follows the trace of the app it shows: the Kompanion keeps its trace on meanwhile
+		this.canvasTrace?.stop();
+		this.canvasTrace = undefined;
+		if (this.onCanvas && this.client) {
+			this.canvasTrace = new KompanionTrace(
+				this.client,
+				this.onCanvas,
+				() => this.pushOverlay(),
+				(line) => this.output.appendLine(line),
+			);
+			this.canvasTrace.start();
+		}
 		this.pushOverlay();
 	}
 
@@ -292,7 +318,8 @@ export class KompanionRegistrar implements IRegistrar {
 		}
 		this.overlayPending = setTimeout(() => {
 			this.overlayPending = undefined;
-			KompanionOverlay.set(this.onCanvas ? this.provider.overlay(this.onCanvas) : undefined);
+			const routes = this.onCanvas ? this.provider.overlay(this.onCanvas) : undefined;
+			KompanionOverlay.set(routes ? { ...routes, ...(this.canvasTrace?.overlay() ?? {}) } : undefined);
 		}, 300);
 	}
 
